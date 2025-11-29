@@ -36,7 +36,7 @@ xlabel('Frequency f/f_s ');
 ylabel('Amplitude / dBWN ');
 axis([0 0.5 -20 60]);
 title('First order sigma-delta, DC input');
-print(fig1, 'lec5s30', '-depsc')
+% print(fig1, 'lec5s30', '-depsc')
 
 fig2 = figure(2);
 L = 50;
@@ -45,4 +45,4 @@ xlabel('Time t/T');
 ylabel('Output');
 axis([0 L -1.1 1.1]);
 title('First order sigma-delta, DC input');
-print(fig2, 'lec5s31', '-depsc')
+% print(fig2, 'lec5s31', '-depsc')
