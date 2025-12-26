@@ -1,0 +1,30 @@
+---
+title: "Theoritischen Grundlagen zur Implementierung von digitalen Biquads"
+author:
+  - name: Eduard Funkner
+    orcid: 0009-0003-5073-0204
+    email: efunkner@stud.hs-bremen.de
+    corresponding: true
+    roles: "Lead author"
+    affiliation:
+      - name: Hochschule Bremen - City University of Applied Sciences (HSB)
+        city: Bremen
+        state: Germany
+        url: https://www.hs-bremen.de  
+  - name: Martin Schwarz
+    orcid: 0009-0009-5403-9553
+    email: maschwarz@stud.hs-bremen.de
+    corresponding: true
+    roles: "Lead author"
+date: last-modified
+license: "Apache-2.0 license"
+reader-mode: true
+
+page-footer:
+left: |
+    Bachelor Thesis (B.Eng.) Lehrdemonstrationen zur digitalen Filterung auf eingebetteten Systemen.
+right: |
+    This report was built with <a href="https://quarto.org/">Quarto<a>.
+---
+
+{{< include ../chapters/einleitung.qmd >}}

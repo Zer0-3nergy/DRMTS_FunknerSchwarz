@@ -1,0 +1,76 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: en
+
+book:
+  title: "Lehrdemonstrationen zur digitalen Filterung auf eingebetteten Systemen"
+  author:
+    - name: Eduard Funkner
+      orcid: 0009-0003-5073-0204
+      email: efunkner@stud.hs-bremen.de
+      corresponding: true
+      roles: "Lead author"
+      affiliation:
+        - name: Hochschule Bremen - City University of Applied Sciences (HSB)
+          city: Bremen
+          state: Germany
+          url: https://www.hs-bremen.de  
+    - name: Martin Schwarz
+      orcid: 0009-0009-5403-9553
+      email: maschwarz@stud.hs-bremen.de
+      corresponding: true
+      roles: "Lead author"
+  date: last-modified
+  license: "Apache-2.0 license"
+  reader-mode: true
+
+  page-footer:
+    left: |
+      Lehrdemonstrationen zur digitalen Filterung auf eingebetteten Systemen
+    right: |
+      This report was built with <a href="https://quarto.org/">Quarto</a>.
+  cover-image: images/HSB_Logo.png
+  favicon: images/HSB_Logo.png
+  site-url: https://efunkner.github.io/Thesis-Funkner-Schwarz/
+  repo-url: https://github.com/efunkner/Thesis-Funkner-Schwarz/
+  repo-branch: main
+  repo-actions: [edit, issue]
+  downloads: [pdf]
+
+  chapters:
+    - index.qmd
+    - part: Presentation
+      chapters:
+        - presentation/index.qmd
+
+
+bibliography: _bibliography/references.bib
+
+format:
+  html:
+    theme: flatly
+    # default-image-extension: svg
+  pdf:
+    documentclass: scrbook 
+    # lof: true
+    # lot: true
+    toc: true    
+    geometry:
+      - top=30mm
+      - left=20mm
+      - heightrounded
+    hyperrefoptions:
+      - linktoc=all
+    colorlinks: true
+    linkcolor: "blue"
+    biblio-style: "ieee"
+    highlight-style: "github"
+    # mainfont: "Calibri"
+    #keep-tex: true
+    #default-image-extension: tex
+    output-file: drms-fs
+
+execute:
+  freeze: auto

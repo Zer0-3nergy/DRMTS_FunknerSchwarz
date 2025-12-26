@@ -1,0 +1,12 @@
+LTspice 24.0.12 for Windows
+Circuit: * C:\Users\eduar\Desktop\ideal_circuit\cap_switch\sim3_switched_capacitor.asc
+Start Time: Sat Dec 27 00:05:59 2025
+solver = Normal
+Maximum thread count: 16
+tnom = 27
+temp = 27
+method = modified trap
+WARNING: Less than two connections to node vref.  This node is used by vref.
+Per .tran options, skipping operating point for transient analysis.
+Total elapsed time: 1.205 seconds.
+
