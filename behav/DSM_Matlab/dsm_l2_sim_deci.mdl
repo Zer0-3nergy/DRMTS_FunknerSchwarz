@@ -42,7 +42,7 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-11-05T15:51:25Z</dcterms:created>
   <dc:creator>mimeiners</dc:creator>
   <cp:lastModifiedBy>korvo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-14T16:24:49Z</dcterms:modified>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-14T16:43:48Z</dcterms:modified>
   <cp:revision>17.21</cp:revision>
   <cp:version>R2025b</cp:version>
 </cp:coreProperties>
@@ -108,7 +108,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
 <?xml version="1.0" encoding="utf-8"?>
 <ModelInformation Version="1.0">
   <Model>
-    <P Name="ModelUUID">9fc8d8da-1c9e-41e9-8bc0-4a67a055b7d5</P>
+    <P Name="ModelUUID">d5e8bf20-c9ad-42cc-b808-597aeba97105</P>
     <P Name="LastSavedArchitecture">win64</P>
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
@@ -1030,16 +1030,6 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
             </rateSpec>
             <sti>0</sti>
           </rates>
-          <rates type="sltp.mm.core.Rate" uuid="62831c80-e58f-4070-a6f0-8b99c8bdcc39">
-            <annotation>D2</annotation>
-            <color>986198527</color>
-            <hasBlocks>true</hasBlocks>
-            <rateIndex>1</rateIndex>
-            <rateSpec type="sltp.mm.core.RateSpec">
-              <period>6.4e-05</period>
-            </rateSpec>
-            <sti>1</sti>
-          </rates>
         </tasks>
       </subgraph>
     </rootTask>
@@ -1100,12 +1090,6 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
           <rate>1e-06</rate>
           <title>D1</title>
         </rates>
-        <rates type="sltp.mm.syntax.RateData">
-          <color>#3ac831</color>
-          <hasBlocks>true</hasBlocks>
-          <rate>6.4e-05</rate>
-          <title>D2</title>
-        </rates>
         <title>D1</title>
         <type>implicit-periodic</type>
         <diagramElement type="diagram.editor.model.Entity" uuid="5593e1f5-5de9-4f6f-a422-92a4154ffa8b"/>
@@ -1122,9 +1106,9 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
 __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[1024, 0, 2048, 1104]</P>
+  <P Name="Location">[-1, -7, 2049, 1105]</P>
   <P Name="Open">on</P>
-  <P Name="ZoomFactor">97</P>
+  <P Name="ZoomFactor">148</P>
   <P Name="ReportName">simulink-default.rpt</P>
   <P Name="SIDHighWatermark">1664</P>
   <Block BlockType="Inport" Name="u" SID="12">
@@ -1167,6 +1151,36 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="ZOrder">13</P>
     <P Name="Gain">c2</P>
   </Block>
+  <Block BlockType="DiscreteFir" Name="HBF1" SID="1663">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[1075, -29, 1135, 9]</P>
+    <P Name="ZOrder">243</P>
+    <P Name="CopyFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;copy&apos;);</P>
+    <P Name="DeleteFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="LoadFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;load&apos;);</P>
+    <P Name="ModelCloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="PreSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;presave&apos;);</P>
+    <P Name="PostSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;postsave&apos;);</P>
+    <P Name="CloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="InputPortMap">u0</P>
+    <P Name="OutputPortMap">o0</P>
+    <P Name="Coefficients">HBF1num</P>
+  </Block>
+  <Block BlockType="DiscreteFir" Name="HBF2" SID="1664">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[1200, -29, 1260, 9]</P>
+    <P Name="ZOrder">244</P>
+    <P Name="CopyFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;copy&apos;);</P>
+    <P Name="DeleteFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="LoadFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;load&apos;);</P>
+    <P Name="ModelCloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="PreSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;presave&apos;);</P>
+    <P Name="PostSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;postsave&apos;);</P>
+    <P Name="CloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="InputPortMap">u0</P>
+    <P Name="OutputPortMap">o0</P>
+    <P Name="Coefficients">HBF2num</P>
+  </Block>
   <Block BlockType="DiscreteFilter" Name="Integrator" SID="2">
     <PortCounts in="1" out="1"/>
     <P Name="Position">[360, 87, 420, 123]</P>
@@ -1199,6 +1213,21 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Denominator">[1 -1]</P>
     <P Name="SampleTime">Ts</P>
   </Block>
+  <Block BlockType="DiscreteFir" Name="Sinc3 + droop" SID="1662">
+    <PortCounts in="1" out="1"/>
+    <P Name="Position">[950, -29, 1010, 9]</P>
+    <P Name="ZOrder">242</P>
+    <P Name="CopyFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;copy&apos;);</P>
+    <P Name="DeleteFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="LoadFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;load&apos;);</P>
+    <P Name="ModelCloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="PreSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;presave&apos;);</P>
+    <P Name="PostSaveFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;postsave&apos;);</P>
+    <P Name="CloseFcn">dspblkCoreblockFVToolHelper(gcbh,&apos;close&apos;);</P>
+    <P Name="InputPortMap">u0</P>
+    <P Name="OutputPortMap">o0</P>
+    <P Name="Coefficients">hsinc3_dcf</P>
+  </Block>
   <Block BlockType="Sum" Name="Sum" SID="4">
     <PortCounts in="2" out="1"/>
     <P Name="Position">[295, 95, 315, 115]</P>
@@ -1227,7 +1256,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="IconDisplay">Signal name</P>
   </Block>
   <Block BlockType="Outport" Name="v" SID="14">
-    <P Name="Position">[990, -17, 1020, -3]</P>
+    <P Name="Position">[1375, -17, 1405, -3]</P>
     <P Name="ZOrder">5</P>
     <P Name="ShowName">off</P>
     <P Name="Port">2</P>
@@ -1273,9 +1302,9 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Src">15#out:1</P>
     <P Name="Points">[55, 0]</P>
     <Branch>
-      <P Name="ZOrder">118</P>
+      <P Name="ZOrder">106</P>
       <P Name="Points">[0, -115]</P>
-      <P Name="Dst">14#in:1</P>
+      <P Name="Dst">1662#in:1</P>
     </Branch>
     <Branch>
       <P Name="ZOrder">22</P>
@@ -1316,6 +1345,21 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
     <P Name="Src">22#out:1</P>
     <P Name="Dst">15#in:1</P>
   </Line>
+  <Line>
+    <P Name="ZOrder">104</P>
+    <P Name="Src">1662#out:1</P>
+    <P Name="Dst">1663#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">105</P>
+    <P Name="Src">1663#out:1</P>
+    <P Name="Dst">1664#in:1</P>
+  </Line>
+  <Line>
+    <P Name="ZOrder">107</P>
+    <P Name="Src">1664#out:1</P>
+    <P Name="Dst">14#in:1</P>
+  </Line>
   <Annotation SID="9">
     <P Name="Name">&lt;!DOCTYPE HTML PUBLIC &apos;-//W3C//DTD HTML 4.0//EN&apos; &apos;http://www.w3.org/TR/REC-html40/strict.dtd&apos;&gt;
 &lt;html&gt;
@@ -1348,7 +1392,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
   <Object PropName="BdWindowsInfo" ObjectID="1" ClassName="Simulink.BDWindowsInfo">
     <Object PropName="WindowsInfo" ObjectID="2" ClassName="Simulink.WindowInfo">
       <P Name="IsActive" Class="logical">1</P>
-      <P Name="Location" Class="double">[1024.0, 0.0, 1024.0, 1104.0]</P>
+      <P Name="Location" Class="double">[-1.0, -7.0, 2050.0, 1112.0]</P>
       <Object PropName="ModelBrowserInfo" ObjectID="3" ClassName="Simulink.ModelBrowserInfo">
         <P Name="Visible" Class="logical">0</P>
         <P Name="DockPosition" Class="char">Left</P>
@@ -1366,10 +1410,10 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="IsTabbed" Class="logical">1</P>
           <P Name="ViewObjType" Class="char">SimulinkTopLevel</P>
           <P Name="LoadSaveID" Class="char">0</P>
-          <P Name="Extents" Class="double">[1233.0, 1091.0]</P>
-          <P Name="ZoomFactor" Class="double">0.96905965621840229</P>
-          <P Name="Offset" Class="double">[555.68587713027159, -316.5826554771956]</P>
-          <P Name="SceneRectInView" Class="double">[555.68587713027159, -316.5826554771956, 1017.8939899833057, 900.66694490818043]</P>
+          <P Name="Extents" Class="double">[2515.0, 837.0]</P>
+          <P Name="ZoomFactor" Class="double">1.4761904761904761</P>
+          <P Name="Offset" Class="double">[14.499621820889992, -137.95304509460559]</P>
+          <P Name="SceneRectInView" Class="double">[14.499621820889992, -137.95304509460559, 1362.9677419354839, 453.6]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>
@@ -1481,11 +1525,11 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="Minimized" Class="char">Unset</P>
         </Object>
       </Array>
-      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAE0AAADAPwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAB5AP////wAAAB5AAADAAAAAAAA////+gAAAAECAAAAAvsAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAApwD////7AAAAcABMAGkAYgByAGEAcgB5AEIAcgBvAHcAcwBlAHIAMgAgAEwAaQBiAHIAYQByAHkAQgByAG8AdwBzAGUAcgBTAHQAdQBkAGkAbwBDAG8AbQBwAG8AbgBlAG4AdAAvAGQAcwBtAF8AbAAxAF8AcwBpAG0AAAAAAP////8AAAAAAAAAAAAAAAEAAAKFAAADBvwCAAAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZQBjAHQAbwByAAAAAHkAAAMGAAACFgD///8AAAADAAAE/gAAAQP8AQAAAAL7AAAANgBHAEwAVQBFADIAOgBTAHAAcgBlAGEAZABTAGgAZQBlAHQALwBNAG8AZABlAGwARABhAHQAYQAAAAAAAAAEnwAAAUYA////+/////8AAAAAAP////8AAAMWAP///wAABP4AAASKAAAAAQAAAAIAAAABAAAAAvwAAAABAAAAAgAAAAA=</P>
+      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAE0AAADAPwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAB5AP////wAAAB5AAADAAAAAAAA////+gAAAAECAAAAAvsAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAApwD////7AAAAcABMAGkAYgByAGEAcgB5AEIAcgBvAHcAcwBlAHIAMgAgAEwAaQBiAHIAYQByAHkAQgByAG8AdwBzAGUAcgBTAHQAdQBkAGkAbwBDAG8AbQBwAG8AbgBlAG4AdAAvAGQAcwBtAF8AbAAxAF8AcwBpAG0AAAAAAP////8AAAAAAAAAAAAAAAEAAAKFAAADBvwCAAAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZQBjAHQAbwByAAAAAHkAAAMGAAACFgD///8AAAADAAAKAAAAAQP8AQAAAAL7AAAANgBHAEwAVQBFADIAOgBTAHAAcgBlAGEAZABTAGgAZQBlAHQALwBNAG8AZABlAGwARABhAHQAYQAAAAAAAAAEnwAAAUYA////+/////8BAAAAAAAACgAAAAMWAP///wAACgAAAAOMAAAAAQAAAAIAAAABAAAAAvwAAAABAAAAAgAAAAA=</P>
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">1913c7f6-45b0-4ddb-855e-64098af2f355</P>
     </Object>
-    <P Name="BDUuid" Class="char">fce69b57-9b0a-4354-a551-bf3d62fe6c10</P>
+    <P Name="BDUuid" Class="char">ce4252a4-f4cf-43d9-a903-dfe47c96b45f</P>
   </Object>
 </WindowsInfo>
 

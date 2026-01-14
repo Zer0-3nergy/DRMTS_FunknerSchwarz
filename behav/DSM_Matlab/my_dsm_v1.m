@@ -3,7 +3,7 @@ clc;
 clear;
 close all;
 
-%% Calibration of test system
+% Calibration of test system
 L = 2;                % Order of modulator
 form = 'CIFB';        % Cascade of integrator feedback
 fs = 1e6;             % Sampling frequency 
@@ -17,23 +17,13 @@ A = 0.8;              % Signal amplitude
 Ts  = 1/fs;             % time step
 
 t = 0:Ts:(N-1)/fs;
-u = A * sin(2 * pi * fx/fs * [0:N-1]);
+u = A * sin(2 * pi * fx/fs * (0:N-1));
 
-%% Design NTF
+% Design NTF
 H = synthesizeNTF(L, M)
 
-%% Pole-zero map
-%fig1 = figure(1);
-%plotPZ(H);
 
-%% Bode plot
-%f = linspace(0, 0.5, N/2+1);
-%z = exp(2i*pi*f);
-%fig2 = figure(2);
-%plot(f, dbv(evalTF(H, z)));
-%sigma_H = dbv(rmsGain(H, 0, 0.5/M))  % Example Modulator System
-
-%% Realize DSM
+% Realize DSM
 [a, g, b, c] = realizeNTF(H, form);
 b(2:end) = 0;
 ABCD = stuffABCD(a, g, b, c, form);
@@ -71,7 +61,7 @@ vsim = simOut.yout.get('v').Values.Data';
 ksim = (vsim*ysim')/(ysim*ysim');
 
 v = vsim;
-%% Time-domain plot of DSM with delsig toolbox
+% Time-domain plot of DSM with delsig toolbox
 fig3 = figure(3);
 tsamples = 0:N/2;
 stairs(tsamples, u(tsamples+1));
@@ -80,13 +70,14 @@ stairs(tsamples, v(tsamples+1));
 stairs(tsamples, ysim(tsamples+1));
 hold off;
 axis([0 N/2 -1.2 1.2])
+%xlim([0 100]);
 legend('u','ysim', 'vsim');
 
 %% Spectral analysis cmp. lecture
 sq = abs(fft(v));
 
 % Remove redundant half of spectrum and normalize to FS
-f = [0:N/2-1]/N;  % frequency vector
+f = (0:N/2-1)/N;  % frequency vector
 z = exp(2i*pi*f);
 
 sq_hlf = sq(1:end/2)/(N/2);
@@ -145,36 +136,93 @@ h1 = zeros(1, Nsinc);
 h1(1:Nsinc) = 1/Nsinc;
 hsinc1 = ones(1, Nsinc)*1/Nsinc;
 hsinc2 = conv(hsinc1, hsinc1);
-hsinc3 = conv(hsinc1, hsinc2);
+hsinc3 = conv(hsinc1, hsinc2); % impulsresponse
 
-%% Filter SDM output
-Sinc3outOrg = conv(hsinc3, v);
-Sinc3out = downsample(Sinc3outOrg, Nsinc);
+Hsinc3 = dsp.FIRFilter('Numerator',hsinc3);
+% Filter SDM output
+%Sinc3outOrg = conv(hsinc3, v);
+%Sinc3out = downsample(Sinc3outOrg, Nsinc);
 
-%% Droop correction filter (DCF)
+% Droop correction filter (DCF)
 DCF = fdesign.decimator(Nsinc, 'ciccomp', 1, 3, 'n,fc,ap,ast', 12, 0.45, 0.05, 60);
+% Droop Corr Filter Obj
 Hdcf = design(DCF, 'equiripple', 'SystemObject', true);
 DCFnum = Hdcf.Numerator;
 [DCFfreq, w3] = freqz(DCFnum, 1);
 [DCFimp, tw3] = impz(DCFnum, 1);
 
-%% Filter operation
-DCFout = conv(Sinc3out, DCFimp);
+% sinc3 + droop
+hsinc3_dcf = conv(hsinc3, DCFnum);
+Hsinc3dcf = dsp.FIRFilter('Numerator',hsinc3_dcf);
 
-%% Half-band filter 1 (HBF1)
+% Filter operation
+%DCFout = conv(Sinc3out, DCFimp);
+
+% Half-band filter 1 (HBF1)
 FsHBF1 = fs/Nsinc;
 HBF1taps = 26;
 HBF1num = firhalfband(HBF1taps, 0.25);
-[hbf1f, w1] = freqz(HBF1num, 1);
-[hbf1t, tw1] = impz(HBF1num, 1);
-HBF1outOrg = conv(DCFout, hbf1t);
-HBF1out = downsample(HBF1outOrg, 2);
+%[hbf1f, w1] = freqz(HBF1num, 1);
+%[hbf1t, tw1] = impz(HBF1num, 1);
+%HBF1outOrg = conv(DCFout, hbf1t);
+%HBF1out = downsample(HBF1outOrg, 2);
 
-%% Half-band filter 2 (HBF2)
+% Half-band1 filter obj
+HBF1 = dsp.FIRFilter('Numerator',HBF1num);
+% Half-band filter 2 (HBF2)
 FsHBF2 = FsHBF1/2;
 HBF2taps = 50;
 HBF2num = firhalfband(HBF2taps, 0.25);
-[hbf2f, w2] = freqz(HBF2num, 1);
-[hbf2t, tw2] = impz(HBF2num, 1);
-HBF2outOrg = conv(HBF1out, hbf2t);
-HBF2out = downsample(HBF2outOrg, 2);
+%[hbf2f, w2] = freqz(HBF2num, 1);
+%[hbf2t, tw2] = impz(HBF2num, 1);
+%HBF2outOrg = conv(HBF1out, hbf2t);
+%HBF2out = downsample(HBF2outOrg, 2);
+
+% Half-band2 filter obj
+HBF2 = dsp.FIRFilter('Numerator',HBF2num);
+
+%% Look at all filters
+
+view = fvtool(Hsinc3, Hdcf, Hsinc3dcf, HBF1, HBF2);
+legend(view,'Sinc3', 'Droop-Corr', 'Sinc3 + dcf', 'HBF1', 'HBF2')
+
+
+%% Simulink Simulation with deci
+mdl = 'dsm_l2_sim_deci';    % 2. Order + decimation
+open_system(mdl);
+
+sigIn.time = t';
+sigIn.signals(1).values = u';
+sigIn.signals(1).dimensions = 1;
+
+simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
+    'StopTime', num2str(max(t)), ...
+    'SaveState','on','StateSaveName','xout',...
+    'SaveOutput','on','OutputSaveName','yout',...
+    'SaveFormat', 'Dataset');
+
+
+% Quantizer gains
+ysim = simOut.yout.get('y').Values.Data';
+vsim = simOut.yout.get('v').Values.Data';
+ksim = (vsim*ysim')/(ysim*ysim');
+
+vd = vsim;
+
+% Time-domain plot of DSM with delsig toolbox
+fig3 = figure(3);
+tsamples = 0:N/2;
+stairs(tsamples, u(tsamples+1));
+hold on;
+stairs(tsamples, vd(tsamples+1));
+hold off;
+grid();
+axis([0 N/2 -1.2 1.2])
+%xlim([0 2000]);
+legend('u', 'vsim');
+
+%% realize Filters
+% not realy working, try usind blocks with the kown coefficients
+%DeciFilter = cascade(Hsinc3, Hdcf, HBF1, HBF2);
+
+%realizemdl(DeciFilter)
