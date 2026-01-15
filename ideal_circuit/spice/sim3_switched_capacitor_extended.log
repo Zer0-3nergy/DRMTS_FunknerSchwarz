@@ -1,11 +1,11 @@
 LTspice 24.0.12 for Windows
-Circuit: * C:\Users\eduar\Desktop\ideal_circuit\sim3_switched_capacitor_extended.asc
-Start Time: Thu Dec 25 17:34:44 2025
+Circuit: * C:\Users\Eduard\workspace\DRMTS_FunknerSchwarz\ideal_circuit\spice\sim3_switched_capacitor_extended.asc
+Start Time: Thu Jan 15 15:14:00 2026
 solver = Normal
 Maximum thread count: 16
 tnom = 27
 temp = 27
-method = modified trap
+method = trap
 WARNING: Less than two connections to node out.  This node is used by b:x3:1.
 Per .tran options, skipping operating point for transient analysis.
 Ignoring empty pin current: Ix(x4:vinm)
@@ -22,5 +22,5 @@ Ignoring empty pin current: Ix(x3:vss)
 Ignoring empty pin current: Ix(x3:in)
 Ignoring empty pin current: Ix(x6:vinm)
 Ignoring empty pin current: Ix(x6:vinp)
-Total elapsed time: 1.293 seconds.
+Total elapsed time: 1.405 seconds.
 
