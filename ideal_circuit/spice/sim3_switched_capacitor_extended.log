@@ -1,6 +1,6 @@
 LTspice 24.0.12 for Windows
 Circuit: * C:\Users\Eduard\workspace\DRMTS_FunknerSchwarz\ideal_circuit\spice\sim3_switched_capacitor_extended.asc
-Start Time: Thu Jan 15 15:14:00 2026
+Start Time: Thu Jan 15 22:35:20 2026
 solver = Normal
 Maximum thread count: 16
 tnom = 27
@@ -22,5 +22,5 @@ Ignoring empty pin current: Ix(x3:vss)
 Ignoring empty pin current: Ix(x3:in)
 Ignoring empty pin current: Ix(x6:vinm)
 Ignoring empty pin current: Ix(x6:vinp)
-Total elapsed time: 1.405 seconds.
+Total elapsed time: 2.402 seconds.
 
