@@ -42,8 +42,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-11-05T15:51:25Z</dcterms:created>
   <dc:creator>mimeiners</dc:creator>
   <cp:lastModifiedBy>korvo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-16T09:29:57Z</dcterms:modified>
-  <cp:revision>17.23</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-16T14:55:48Z</dcterms:modified>
+  <cp:revision>17.24</cp:revision>
   <cp:version>R2025b</cp:version>
 </cp:coreProperties>
 
@@ -65,11 +65,11 @@ __MWOPC_PART_BEGIN__ /metadata/mwcorePropertiesReleaseInfo.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Version information for MathWorks R2025b Release -->
 <MathWorks_version_info>
-  <version>25.2.0.3042426</version>
+  <version>25.2.0.3055257</version>
   <release>R2025b</release>
-  <description>Update 1</description>
-  <date>Oct 03 2025</date>
-  <checksum>3600278938</checksum>
+  <description>Update 2</description>
+  <date>Oct 16 2025</date>
+  <checksum>567933462</checksum>
 </MathWorks_version_info>
 
 __MWOPC_PART_BEGIN__ /simulink/_rels/blockdiagram.xml.rels
@@ -113,7 +113,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.23&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.24&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="SampleTimeColors">on</P>
@@ -1236,7 +1236,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">78</P>
     <P Name="Src">21#out:1</P>
-    <P Name="Dst">17#in:1</P>
+    <P Name="Points">[31, 0]</P>
+    <Branch>
+      <P Name="ZOrder">147</P>
+      <P Name="Points">[0, -115]</P>
+      <P Name="Dst">13#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">146</P>
+      <P Name="Dst">17#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">21</P>
@@ -1289,16 +1298,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">59</P>
     <P Name="Src">22#out:1</P>
-    <P Name="Points">[11, 0]</P>
-    <Branch>
-      <P Name="ZOrder">144</P>
-      <P Name="Points">[0, -115]</P>
-      <P Name="Dst">13#in:1</P>
-    </Branch>
-    <Branch>
-      <P Name="ZOrder">143</P>
-      <P Name="Dst">15#in:1</P>
-    </Branch>
+    <P Name="Dst">15#in:1</P>
   </Line>
   <Annotation SID="9">
     <P Name="Name">&lt;!DOCTYPE HTML PUBLIC &apos;-//W3C//DTD HTML 4.0//EN&apos; &apos;http://www.w3.org/TR/REC-html40/strict.dtd&apos;&gt;
