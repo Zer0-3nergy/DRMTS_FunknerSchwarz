@@ -37,21 +37,17 @@ c2 = c(2);
 
 
 %% simulink mdl sim (no decimation)
-mdl = 'dsm_l2_sim';    % 2. Order
-open_system(mdl);
-
-sigIn.time = t';
-sigIn.signals(1).values = u';
-sigIn.signals(1).dimensions = 1;
-
+mdl = 'dsm_l2_sim_v2';    % 2. Order
+%open_system(mdl);
+load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'StopTime', num2str(max(t)), ...
     'SaveState','on','StateSaveName','xout',...
     'SaveOutput','on','OutputSaveName','yout',...
-    'SaveFormat', 'Dataset');
+    'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
-ysim = simOut.yout.get('y').Values.Data';
-vsim = simOut.yout.get('v').Values.Data';
+ysim = simOut.y;
+vsim = simOut.v;
 
 %% time domain plot
 fig1 = figure(1);
@@ -69,19 +65,22 @@ grid();
 %% Spectral analysis Windowed
 % SNR of sim output
 sq = abs(fft(vsim));
+
 % Remove redundant half of spectrum and normalize to FS
 f = (0:N/2-1)/N;  % frequency vector
 z = exp(2i*pi*f);
 sq_hlf = sq(1:end/2)/(N/2);
 sqdBFS = 20*log10(sq_hlf);
+
 % log10(0) -> -inf/inf correction
 sqdBFS(isinf(sqdBFS)) = -150;
+
 sigbin = 1 + cycles;
-noise = [sq_hlf(1:sigbin-1), sq_hlf(sigbin+1:end)];
+noise = [sq_hlf(1:sigbin-1)', sq_hlf(sigbin+1:end)'];
 snr = 10*log10(sq_hlf(sigbin)^2/sum(noise.^2));
 fprintf('SNR sim1: %d\n', snr);
 
-specHW = fft(vsim.*ds_hann(N))/(N/4);
+specHW = fft((vsim').*ds_hann(N))/(N/4);
 
 % Plot
 fig2 = figure(2);
@@ -132,25 +131,20 @@ legend(view,'Sinc3', 'DCF', 'HBF1', 'HBF2')
 %% simulink mdl sim (with decimation)
 
 mdl = 'dsm_l2_sim_deci';    % 2. Order + decimation
-open_system(mdl);
+%open_system(mdl);
 
-sigIn.time = t';
-sigIn.signals(1).values = u';
-sigIn.signals(1).dimensions = 1;
-
+load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'StopTime', num2str(max(t)), ...
     'SaveState','on','StateSaveName','xout',...
     'SaveOutput','on','OutputSaveName','yout',...
-    'SaveFormat', 'Dataset');
+    'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
-
-% Quantizer gains
-ysim2 = simOut.yout.get('y').Values.Data';
-vsim2 = simOut.yout.get('v').Values.Data';
+ysim2 = simOut.y;
+vsim2 = simOut.v;
 
 %% time domain plot sim 2
-fig1 = figure(1);
+fig3 = figure(3);
 tsamples = 0:N/2;
 stairs(tsamples, u(tsamples+1));
 hold on;
@@ -172,15 +166,15 @@ sqdBFS = 20*log10(sq_hlf);
 % log10(0) -> -inf/inf correction
 sqdBFS(isinf(sqdBFS)) = -150;
 sigbin = 1 + cycles;
-noise = [sq_hlf(1:sigbin-1), sq_hlf(sigbin+1:end)];
+noise = [sq_hlf(1:sigbin-1)', sq_hlf(sigbin+1:end)'];
 snr = 10*log10(sq_hlf(sigbin)^2/sum(noise.^2));
 fprintf('SNR sim2: %d\n', snr);
 
-specHW = fft(vsim.*ds_hann(N))/(N/4);
-specHW2 = fft(vsim2.*ds_hann(N))/(N/4);
+specHW = fft((vsim').*ds_hann(N))/(N/4);
+specHW2 = fft((vsim2').*ds_hann(N))/(N/4);
 
 % Plot
-fig2 = figure(2);
+fig4 = figure(4);
 plot(f, dbv(specHW(1:end/2)));
 hold on;
 plot(f, dbv(specHW2(1:end/2)));
@@ -191,3 +185,5 @@ ylabel('dBFS');
 xlabel('f/fs');
 title ('Windowed Spectral analysis')
 legend('spectrum without decimation', 'spectrum with decimation')
+
+
