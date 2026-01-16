@@ -186,4 +186,35 @@ xlabel('f/fs');
 title ('Windowed Spectral analysis')
 legend('spectrum without decimation', 'spectrum with decimation')
 
+%%
 
+mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
+%open_system(mdl);
+
+load_system(mdl);
+simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
+    'StopTime', num2str(max(t)), ...
+    'SaveState','on','StateSaveName','xout',...
+    'SaveOutput','on','OutputSaveName','yout',...
+    'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
+
+vsim3 = simOut.v;
+y1sim = simOut.y1;
+y2sim = simOut.y2;
+
+%% time domain plot sim 2
+fig5 = figure(5);
+vsim3_len = length(vsim3);
+y1sim_len = length(y1sim);
+y2sim_len = length(y2sim);
+tsamples = 0:vsim3_len-1;
+tsamples2 = 0:vsim3_len-1;
+tsamples3 = 0:vsim3_len-1;
+stairs(tsamples, vsim3(tsamples+1));
+hold on;
+stairs(tsamples, y1sim(tsamples+1));
+stairs(tsamples, y2sim(tsamples+1));
+hold off;
+%axis([0 N/2 -1.2 1.2])
+xlim([0 100]);
+grid();
