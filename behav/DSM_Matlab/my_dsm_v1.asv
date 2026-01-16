@@ -284,6 +284,7 @@ hold on;
 plot(f, dbv(specHWd(1:end/2)));
 hold off;
 axis([0 0.06 -150 0]);
+xlin([])
 grid on;
 ylabel('dBFS');
 xlabel('f/fs');

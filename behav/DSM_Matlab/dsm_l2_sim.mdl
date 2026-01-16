@@ -42,8 +42,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-11-05T15:51:25Z</dcterms:created>
   <dc:creator>mimeiners</dc:creator>
   <cp:lastModifiedBy>korvo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-14T16:24:49Z</dcterms:modified>
-  <cp:revision>17.21</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-16T09:29:57Z</dcterms:modified>
+  <cp:revision>17.23</cp:revision>
   <cp:version>R2025b</cp:version>
 </cp:coreProperties>
 
@@ -65,11 +65,11 @@ __MWOPC_PART_BEGIN__ /metadata/mwcorePropertiesReleaseInfo.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Version information for MathWorks R2025b Release -->
 <MathWorks_version_info>
-  <version>25.2.0.3055257</version>
+  <version>25.2.0.3042426</version>
   <release>R2025b</release>
-  <description>Update 2</description>
-  <date>Oct 16 2025</date>
-  <checksum>567933462</checksum>
+  <description>Update 1</description>
+  <date>Oct 03 2025</date>
+  <checksum>3600278938</checksum>
 </MathWorks_version_info>
 
 __MWOPC_PART_BEGIN__ /simulink/_rels/blockdiagram.xml.rels
@@ -113,7 +113,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.21&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.23&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="SampleTimeColors">on</P>
@@ -1030,16 +1030,6 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
             </rateSpec>
             <sti>0</sti>
           </rates>
-          <rates type="sltp.mm.core.Rate" uuid="62831c80-e58f-4070-a6f0-8b99c8bdcc39">
-            <annotation>D2</annotation>
-            <color>986198527</color>
-            <hasBlocks>true</hasBlocks>
-            <rateIndex>1</rateIndex>
-            <rateSpec type="sltp.mm.core.RateSpec">
-              <period>6.4e-05</period>
-            </rateSpec>
-            <sti>1</sti>
-          </rates>
         </tasks>
       </subgraph>
     </rootTask>
@@ -1100,12 +1090,6 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
           <rate>1e-06</rate>
           <title>D1</title>
         </rates>
-        <rates type="sltp.mm.syntax.RateData">
-          <color>#3ac831</color>
-          <hasBlocks>true</hasBlocks>
-          <rate>6.4e-05</rate>
-          <title>D2</title>
-        </rates>
         <title>D1</title>
         <type>implicit-periodic</type>
         <diagramElement type="diagram.editor.model.Entity" uuid="5593e1f5-5de9-4f6f-a422-92a4154ffa8b"/>
@@ -1122,9 +1106,9 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
 __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[1024, 0, 2048, 1104]</P>
+  <P Name="Location">[768, 0, 1536, 816]</P>
   <P Name="Open">on</P>
-  <P Name="ZoomFactor">97</P>
+  <P Name="ZoomFactor">73</P>
   <P Name="ReportName">simulink-default.rpt</P>
   <P Name="SIDHighWatermark">1664</P>
   <Block BlockType="Inport" Name="u" SID="12">
@@ -1252,16 +1236,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">78</P>
     <P Name="Src">21#out:1</P>
-    <P Name="Points">[42, 0]</P>
-    <Branch>
-      <P Name="ZOrder">57</P>
-      <P Name="Points">[0, -115]</P>
-      <P Name="Dst">13#in:1</P>
-    </Branch>
-    <Branch>
-      <P Name="ZOrder">56</P>
-      <P Name="Dst">17#in:1</P>
-    </Branch>
+    <P Name="Dst">17#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">21</P>
@@ -1314,7 +1289,16 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <Line>
     <P Name="ZOrder">59</P>
     <P Name="Src">22#out:1</P>
-    <P Name="Dst">15#in:1</P>
+    <P Name="Points">[11, 0]</P>
+    <Branch>
+      <P Name="ZOrder">144</P>
+      <P Name="Points">[0, -115]</P>
+      <P Name="Dst">13#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">143</P>
+      <P Name="Dst">15#in:1</P>
+    </Branch>
   </Line>
   <Annotation SID="9">
     <P Name="Name">&lt;!DOCTYPE HTML PUBLIC &apos;-//W3C//DTD HTML 4.0//EN&apos; &apos;http://www.w3.org/TR/REC-html40/strict.dtd&apos;&gt;
@@ -1348,7 +1332,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
   <Object PropName="BdWindowsInfo" ObjectID="1" ClassName="Simulink.BDWindowsInfo">
     <Object PropName="WindowsInfo" ObjectID="2" ClassName="Simulink.WindowInfo">
       <P Name="IsActive" Class="logical">1</P>
-      <P Name="Location" Class="double">[1024.0, 0.0, 1024.0, 1104.0]</P>
+      <P Name="Location" Class="double">[768.0, 0.0, 768.0, 816.0]</P>
       <Object PropName="ModelBrowserInfo" ObjectID="3" ClassName="Simulink.ModelBrowserInfo">
         <P Name="Visible" Class="logical">0</P>
         <P Name="DockPosition" Class="char">Left</P>
@@ -1366,10 +1350,10 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="IsTabbed" Class="logical">1</P>
           <P Name="ViewObjType" Class="char">SimulinkTopLevel</P>
           <P Name="LoadSaveID" Class="char">0</P>
-          <P Name="Extents" Class="double">[1233.0, 1091.0]</P>
-          <P Name="ZoomFactor" Class="double">0.96905965621840229</P>
-          <P Name="Offset" Class="double">[555.68587713027159, -316.5826554771956]</P>
-          <P Name="SceneRectInView" Class="double">[555.68587713027159, -316.5826554771956, 1017.8939899833057, 900.66694490818043]</P>
+          <P Name="Extents" Class="double">[913.0, 731.0]</P>
+          <P Name="ZoomFactor" Class="double">0.7324296141814387</P>
+          <P Name="Offset" Class="double">[50.885535307516875, -328.96924829157189]</P>
+          <P Name="SceneRectInView" Class="double">[50.885535307516875, -328.96924829157189, 997.22892938496625, 798.43849658314377]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>
@@ -1481,7 +1465,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="Minimized" Class="char">Unset</P>
         </Object>
       </Array>
-      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAE0AAADAPwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAB5AP////wAAAB5AAADAAAAAAAA////+gAAAAECAAAAAvsAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAApwD////7AAAAcABMAGkAYgByAGEAcgB5AEIAcgBvAHcAcwBlAHIAMgAgAEwAaQBiAHIAYQByAHkAQgByAG8AdwBzAGUAcgBTAHQAdQBkAGkAbwBDAG8AbQBwAG8AbgBlAG4AdAAvAGQAcwBtAF8AbAAxAF8AcwBpAG0AAAAAAP////8AAAAAAAAAAAAAAAEAAAKFAAADBvwCAAAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZQBjAHQAbwByAAAAAHkAAAMGAAACFgD///8AAAADAAAE/gAAAQP8AQAAAAL7AAAANgBHAEwAVQBFADIAOgBTAHAAcgBlAGEAZABTAGgAZQBlAHQALwBNAG8AZABlAGwARABhAHQAYQAAAAAAAAAEnwAAAUYA////+/////8AAAAAAP////8AAAMWAP///wAABP4AAASKAAAAAQAAAAIAAAABAAAAAvwAAAABAAAAAgAAAAA=</P>
+      <P Name="WindowState" Class="char">AAAA/wAAAAD9AAAAAwAAAAAAAAE0AAADAPwCAAAABPsAAAAWAEQAbwBjAGsAVwBpAGQAZwBlAHQAMwEAAAAxAAAB+AAAAAAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAB5AP////wAAAB5AAADAAAAAAAA////+gAAAAECAAAAAvsAAABgAFMAaQBtAHUAbABpAG4AawA6AEUAZABpAHQAbwByADoAUgBlAGYAZQByAGUAbgBjAGUAZABGAGkAbABlAHMALwBSAGUAZgBlAHIAZQBuAGMAZQBkACAARgBpAGwAZQBzAAAAAAD/////AAAApwD////7AAAAcABMAGkAYgByAGEAcgB5AEIAcgBvAHcAcwBlAHIAMgAgAEwAaQBiAHIAYQByAHkAQgByAG8AdwBzAGUAcgBTAHQAdQBkAGkAbwBDAG8AbQBwAG8AbgBlAG4AdAAvAGQAcwBtAF8AbAAxAF8AcwBpAG0AAAAAAP////8AAAAAAAAAAAAAAAEAAAKFAAADBvwCAAAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZQBjAHQAbwByAAAAAHkAAAMGAAACFgD///8AAAADAAAE/gAAAQP8AQAAAAL7AAAANgBHAEwAVQBFADIAOgBTAHAAcgBlAGEAZABTAGgAZQBlAHQALwBNAG8AZABlAGwARABhAHQAYQAAAAAAAAAEnwAAAUYA////+/////8AAAAAAP////8AAAMWAP///wAAA74AAAMiAAAAAQAAAAIAAAABAAAAAvwAAAABAAAAAgAAAAA=</P>
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">1913c7f6-45b0-4ddb-855e-64098af2f355</P>
     </Object>
