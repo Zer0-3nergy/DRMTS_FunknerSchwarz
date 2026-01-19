@@ -225,3 +225,4 @@ legend('vsim3(after deci)', 'ydsim2(ref. after deci)','y2sim3');
 grid();
 
 % warum sind es nur 64 werte nach dem cic decimator und nicht 8192?
+% schaltung new designen von sample based -> Frame based !!!
