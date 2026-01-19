@@ -142,17 +142,18 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 
 ysim2 = simOut.y;
 vsim2 = simOut.v;
-
+ydsim2 = simOut.y1;
 %% time domain plot sim 2
 fig3 = figure(3);
 tsamples = 0:N/2;
 stairs(tsamples, u(tsamples+1));
 hold on;
 stairs(tsamples, vsim2(tsamples+1));
+stairs(tsamples, ydsim2(tsamples+1));
 hold off;
 axis([0 N/2 -1.2 1.2])
 %xlim([0 100]);
-legend('u', 'vsim');
+legend('u', 'vsim','yd');
 grid();
 
 %% Spectral analysis Windowed sim2
@@ -186,8 +187,8 @@ xlabel('f/fs');
 title ('Windowed Spectral analysis')
 legend('spectrum without decimation', 'spectrum with decimation')
 
-%%
-
+%% CIC Sinc3
+frame_l = length(u);
 mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
 %open_system(mdl);
 
@@ -199,22 +200,28 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim3 = simOut.v;
-y1sim = simOut.y1;
-y2sim = simOut.y2;
+y1sim3 = simOut.y1;
+y2sim3 = simOut.y2;
 
 %% time domain plot sim 2
 fig5 = figure(5);
 vsim3_len = length(vsim3);
-y1sim_len = length(y1sim);
-y2sim_len = length(y2sim);
-tsamples = 0:vsim3_len-1;
-tsamples2 = 0:vsim3_len-1;
-tsamples3 = 0:vsim3_len-1;
-stairs(tsamples, vsim3(tsamples+1));
+y1sim_len = length(y1sim3);
+y2sim_len = length(y2sim3);
+ydsim2_len = length(ydsim2);    % reff signal after Sinc3
+tsamples = 0:N/2;
+tsamples1 = 0:vsim3_len-1;
+tsamples2 = 0:y1sim_len-1;
+tsamples3 = 0:y2sim_len-1;
+tsamplesR = 0: ydsim2_len -1;
+stairs(tsamples1, vsim3(tsamples1+1));
 hold on;
-stairs(tsamples, y1sim(tsamples+1));
-stairs(tsamples, y2sim(tsamples+1));
+stairs(tsamplesR, ydsim2(tsamplesR+1));
+%stairs(tsamples3, y2sim3(tsamples3+1));
 hold off;
-%axis([0 N/2 -1.2 1.2])
-xlim([0 100]);
+axis([0 N/2 -1.2 1.2])
+legend('vsim3(after deci)', 'ydsim2(ref. after deci)','y2sim3');
+%xlim([0 100]);
 grid();
+
+% warum sind es nur 64 werte nach dem cic decimator und nicht 8192?

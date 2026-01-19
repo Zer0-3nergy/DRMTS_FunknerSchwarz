@@ -42,8 +42,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-11-05T15:51:25Z</dcterms:created>
   <dc:creator>mimeiners</dc:creator>
   <cp:lastModifiedBy>korvo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-16T16:50:09Z</dcterms:modified>
-  <cp:revision>17.26</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-19T10:30:39Z</dcterms:modified>
+  <cp:revision>17.27</cp:revision>
   <cp:version>R2025b</cp:version>
 </cp:coreProperties>
 
@@ -113,7 +113,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.26&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.27&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="SampleTimeColors">on</P>
@@ -1099,7 +1099,7 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
   <P Name="Open">on</P>
   <P Name="ZoomFactor">101</P>
   <P Name="ReportName">simulink-default.rpt</P>
-  <P Name="SIDHighWatermark">1669</P>
+  <P Name="SIDHighWatermark">1670</P>
   <Block BlockType="Relay" Name="Comparator1" SID="15">
     <P Name="Position">[815, 90, 845, 120]</P>
     <P Name="ZOrder">8</P>
@@ -1290,6 +1290,16 @@ Workspace</P>
     <P Name="FixptAsFi">on</P>
     <P Name="SampleTime">-1</P>
   </Block>
+  <Block BlockType="ToWorkspace" Name="To Workspace3" SID="1670">
+    <PortCounts in="1"/>
+    <P Name="Position">[1060, 80, 1150, 110]</P>
+    <P Name="ZOrder">259</P>
+    <P Name="VariableName">y1</P>
+    <P Name="MaxDataPoints">inf</P>
+    <P Name="Save2DSignal">2-D array (concatenate along first dimension)</P>
+    <P Name="FixptAsFi">on</P>
+    <P Name="SampleTime">-1</P>
+  </Block>
   <Line>
     <P Name="ZOrder">4</P>
     <P Name="Src">4#out:1</P>
@@ -1375,7 +1385,16 @@ Workspace</P>
   <Line>
     <P Name="ZOrder">104</P>
     <P Name="Src">1662#out:1</P>
-    <P Name="Dst">1665#in:1</P>
+    <P Name="Points">[16, 0]</P>
+    <Branch>
+      <P Name="ZOrder">149</P>
+      <P Name="Points">[0, 105]</P>
+      <P Name="Dst">1670#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">148</P>
+      <P Name="Dst">1665#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">105</P>
@@ -1444,8 +1463,8 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="LoadSaveID" Class="char">0</P>
           <P Name="Extents" Class="double">[1874.0, 740.0]</P>
           <P Name="ZoomFactor" Class="double">1.0110134080307107</P>
-          <P Name="Offset" Class="double">[67.443672116846415, -222.52554347826083]</P>
-          <P Name="SceneRectInView" Class="double">[67.443672116846415, -222.52554347826083, 1482.8685634547589, 585.55108695652166]</P>
+          <P Name="Offset" Class="double">[473.37300672319111, -135.48416568742687]</P>
+          <P Name="SceneRectInView" Class="double">[473.37300672319111, -135.48416568742687, 1482.8685634547589, 585.55108695652166]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>
