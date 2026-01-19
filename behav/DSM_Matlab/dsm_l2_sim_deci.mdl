@@ -42,8 +42,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-11-05T15:51:25Z</dcterms:created>
   <dc:creator>mimeiners</dc:creator>
   <cp:lastModifiedBy>korvo</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-19T10:30:39Z</dcterms:modified>
-  <cp:revision>17.27</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-19T14:33:02Z</dcterms:modified>
+  <cp:revision>17.32</cp:revision>
   <cp:version>R2025b</cp:version>
 </cp:coreProperties>
 
@@ -113,7 +113,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.27&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:17.32&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="SampleTimeColors">on</P>
@@ -1095,7 +1095,7 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleEditor.xml
 __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-  <P Name="Location">[262, 158, 1799, 981]</P>
+  <P Name="Location">[278, 238, 1815, 1061]</P>
   <P Name="Open">on</P>
   <P Name="ZoomFactor">101</P>
   <P Name="ReportName">simulink-default.rpt</P>
@@ -1318,16 +1318,7 @@ Workspace</P>
   <Line>
     <P Name="ZOrder">78</P>
     <P Name="Src">21#out:1</P>
-    <P Name="Points">[42, 0]</P>
-    <Branch>
-      <P Name="ZOrder">130</P>
-      <P Name="Points">[0, -115]</P>
-      <P Name="Dst">1668#in:1</P>
-    </Branch>
-    <Branch>
-      <P Name="ZOrder">56</P>
-      <P Name="Dst">17#in:1</P>
-    </Branch>
+    <P Name="Dst">17#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">21</P>
@@ -1340,8 +1331,16 @@ Workspace</P>
     <P Name="Points">[55, 0]</P>
     <Branch>
       <P Name="ZOrder">106</P>
-      <P Name="Points">[0, -115]</P>
-      <P Name="Dst">1662#in:1</P>
+      <P Name="Points">[0, -10]</P>
+      <Branch>
+        <P Name="ZOrder">152</P>
+        <P Name="Points">[0, -105]</P>
+        <P Name="Dst">1662#in:1</P>
+      </Branch>
+      <Branch>
+        <P Name="ZOrder">151</P>
+        <P Name="Dst">1670#in:1</P>
+      </Branch>
     </Branch>
     <Branch>
       <P Name="ZOrder">22</P>
@@ -1380,21 +1379,21 @@ Workspace</P>
   <Line>
     <P Name="ZOrder">59</P>
     <P Name="Src">22#out:1</P>
-    <P Name="Dst">15#in:1</P>
+    <P Name="Points">[12, 0]</P>
+    <Branch>
+      <P Name="ZOrder">192</P>
+      <P Name="Points">[0, -59; -101, 0; 0, -56]</P>
+      <P Name="Dst">1668#in:1</P>
+    </Branch>
+    <Branch>
+      <P Name="ZOrder">191</P>
+      <P Name="Dst">15#in:1</P>
+    </Branch>
   </Line>
   <Line>
     <P Name="ZOrder">104</P>
     <P Name="Src">1662#out:1</P>
-    <P Name="Points">[16, 0]</P>
-    <Branch>
-      <P Name="ZOrder">149</P>
-      <P Name="Points">[0, 105]</P>
-      <P Name="Dst">1670#in:1</P>
-    </Branch>
-    <Branch>
-      <P Name="ZOrder">148</P>
-      <P Name="Dst">1665#in:1</P>
-    </Branch>
+    <P Name="Dst">1665#in:1</P>
   </Line>
   <Line>
     <P Name="ZOrder">105</P>
@@ -1443,7 +1442,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
   <Object PropName="BdWindowsInfo" ObjectID="1" ClassName="Simulink.BDWindowsInfo">
     <Object PropName="WindowsInfo" ObjectID="2" ClassName="Simulink.WindowInfo">
       <P Name="IsActive" Class="logical">1</P>
-      <P Name="Location" Class="double">[262.0, 158.0, 1537.0, 823.0]</P>
+      <P Name="Location" Class="double">[278.0, 238.0, 1537.0, 823.0]</P>
       <Object PropName="ModelBrowserInfo" ObjectID="3" ClassName="Simulink.ModelBrowserInfo">
         <P Name="Visible" Class="logical">0</P>
         <P Name="DockPosition" Class="char">Left</P>
@@ -1463,8 +1462,8 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="LoadSaveID" Class="char">0</P>
           <P Name="Extents" Class="double">[1874.0, 740.0]</P>
           <P Name="ZoomFactor" Class="double">1.0110134080307107</P>
-          <P Name="Offset" Class="double">[473.37300672319111, -135.48416568742687]</P>
-          <P Name="SceneRectInView" Class="double">[473.37300672319111, -135.48416568742687, 1482.8685634547589, 585.55108695652166]</P>
+          <P Name="Offset" Class="double">[-141.45563458115575, -147.35344447708604]</P>
+          <P Name="SceneRectInView" Class="double">[-141.45563458115575, -147.35344447708604, 1482.8685634547589, 585.55108695652166]</P>
         </Object>
         <Object ObjectID="6">
           <P Name="IsActive" Class="logical">0</P>

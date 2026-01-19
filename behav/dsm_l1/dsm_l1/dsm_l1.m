@@ -17,7 +17,7 @@ u = A * sin(2 * pi * fx * t + 2*pi*rand(1));
 
 %% Simulink Simulation
 mdl = 'dsm_l1_sim';
-open_system(mdl);
+%open_system(mdl);
 
 sigIn.time = t';
 sigIn.signals(1).values = u';
