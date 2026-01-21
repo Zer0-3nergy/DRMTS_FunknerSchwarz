@@ -162,6 +162,8 @@ HBF1 = dsp.FIRFilter('Numerator',HBF1num);
 HBF2 = dsp.FIRFilter('Numerator',HBF2num);
 view = fvtool(Hsinc3, Hdcf, HBF1, HBF2);
 legend(view,'Sinc3', 'DCF', 'HBF1', 'HBF2')
+
+%% ab hier ist nicht mehr correct, falsche decimation bzw. keine, nur filterung!!!
 %% simulink mdl sim (with decimation)
 
 mdl = 'dsm_l2_sim_deci';    % 2. Order + decimation
