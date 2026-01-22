@@ -10,7 +10,7 @@ M = 512;                % OSR
 res = 128;              % how many output samples
 N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
-cycles = 9;             % Number of sinusoids
+cycles = 3;             % Number of sinusoids
 fx = cycles * fs/N;     % Test tone
 A = 0.8;                % Signal amplitude, was 0.8
 Ts  = 1/fs;             % time step
@@ -48,6 +48,11 @@ hsinc1 = ones(1, Nsinc)*1/Nsinc;
 hsinc2 = conv(hsinc1, hsinc1);
 hsinc3 = conv(hsinc1, hsinc2);
 fprintf('SINC3 Order: %d\n', length(hsinc3));
+% gain of filter 
+cic_gain = 1/(Nsinc^3);
+
+% alternativ CIC Decimator
+CICFilter = dsp.CICDecimator( Nsinc, 1, 3);
 
 % Droop correction filter (DCF)
 DCF = fdesign.decimator(Nsinc, 'ciccomp', 1, 3, 'n,fc,ap,ast', 12, 0.45, 0.05, 60);
@@ -93,17 +98,15 @@ u_down = downsample(u,M);
 u_len = length(u_down);
 v2_len = length(vsim2);
 fig3 = figure(3);
-ts_u = 0:(u_len-1)/2;
-ts_v = 0:(v2_len-1)/2;
+ts_u = 0:(u_len-1);
+ts_v = 0:(v2_len-1);
 stairs(ts_u, u_down(ts_u+1));
 hold on;
 stairs(ts_v, vsim2(ts_v+1));
-%stairs(tsamples, ydsim2(tsamples+1));
-%stairs(tsamples, ysim2(tsamples+1));
 hold off;
-axis([0 u_len/2 -1.2 1.2])
+axis([0 u_len -1.2 1.2])
 %xlim([0 100]);
-legend('u_downsampled', 'vsim');
+legend('u downsampled', 'vsim');
 grid();
 
 %% Spectral analysis Windowed sim2
@@ -133,11 +136,15 @@ ylabel('dBFS');
 xlabel('f/fs');
 title ('Windowed Spectral analysis')
 legend('spectrum with decimation')
-
+%%
+% CIC Sinc3 filter design
+Hsinc3 = dsp.FIRFilter('Numerator',hsinc3);
+CICFilter = dsp.CICDecimator( Nsinc, 1, 3);
+fvtool(Hsinc3, CICFilter)
 %% CIC Sinc3
 frame_l = length(u);
 mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
-%open_system(mdl);
+open_system(mdl);
 
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
@@ -154,12 +161,14 @@ y2sim3 = simOut.y2;
 fig5 = figure(5);
 temp_ref = 0:(length(ydsim2)-1);
 temp_cic = 0:(length(vsim3)-1);
-plot(temp_ref, ydsim2', 'r--')
+temp_cic_alt = 0:(length(y1sim3)-1);
+stairs(temp_ref, ydsim2', 'r--')
 hold on;
-plot(temp_cic, vsim3, 'b')
+stairs(temp_cic, vsim3, 'b')
+stairs(temp_cic_alt, y1sim3, 'g')
 grid;
 
-
+% der gain nach den cic ist der struktur selbst zu schulden!
 % warum sind es nur 64 werte nach dem cic decimator und nicht 8192?
 % -> fir sinc decimiert nicht! 
 % ich kann ein sinc nicht einfach als fir bauen -> NEIN
