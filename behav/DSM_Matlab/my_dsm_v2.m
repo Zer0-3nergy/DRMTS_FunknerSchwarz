@@ -12,7 +12,7 @@ N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
 cycles = 3;             % Number of sinusoids
 fx = cycles * fs/N;     % Test tone
-A = 0.8;                % Signal amplitude
+A = 0.8;                % Signal amplitude, was 0.8
 Ts  = 1/fs;             % time step
 
 % test Signal
@@ -49,22 +49,55 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 ysim = simOut.y;
 vsim = simOut.v;
 
-%% time domain plot
-fig1 = figure(1);
+%% compare simulink mdl (no decimation) with delsig toolbox simulation of DSM
+[v, xn, xmax, y] = simulateDSM(u, ABCD);
+% y is bevor comp.!
+figure()
+subplot(2,1,1) % simulink mdl
 tsamples = 0:N/2;
-stairs(tsamples, u(tsamples+1));
+stairs(tsamples, vsim(tsamples+1),'b', LineWidth=0.5);
 hold on;
-stairs(tsamples, vsim(tsamples+1));
-stairs(tsamples, ysim(tsamples+1));
+stairs(tsamples, ysim(tsamples+1),'r', LineWidth=1);
+stairs(tsamples, u(tsamples+1),'g', LineWidth=2);
 hold off;
 axis([0 N/2 -1.2 1.2])
 %xlim([0 100]);
-legend('u','ysim', 'vsim');
+legend('vsim','ysim', 'u');
+grid();
+title('DSM with Simulink mdl');
+
+subplot(2,1,2) % desif toolbox
+tsamples = 0:N/2;
+stairs(tsamples, v(tsamples+1),'b', LineWidth=0.5);
+hold on;
+stairs(tsamples, y(tsamples+1),'r', LineWidth=1);
+stairs(tsamples, u(tsamples+1),'g', LineWidth=2);
+hold off;
+axis([0 N/2 -1.2 1.2])
+%xlim([0 100]);
+legend('v','y', 'u');
+grid();
+title('DSM with delsig toolbox');
+
+eq = isequal(vsim([10 end-1]),v([10 end-1])');
+disp('are Simulink mdl (no deci) and delsig equal?')
+disp(eq) % same exept first view values 
+%% time domain plot
+fig1 = figure(1);
+tsamples = 0:N/2;
+stairs(tsamples, vsim(tsamples+1),'b', LineWidth=0.5);
+hold on;
+stairs(tsamples, ysim(tsamples+1),'r', LineWidth=1);
+stairs(tsamples, u(tsamples+1),'g', LineWidth=2);
+hold off;
+axis([0 N/2 -1.2 1.2])
+%xlim([0 100]);
+legend('vsim','ysim', 'u');
 grid();
 
 %% Spectral analysis Windowed
 % SNR of sim output
-sq = abs(fft(vsim));
+sq = abs(fft(vsim,1024));
 
 % Remove redundant half of spectrum and normalize to FS
 f = (0:N/2-1)/N;  % frequency vector
@@ -86,6 +119,7 @@ specHW = fft((vsim').*ds_hann(N))/(N/4);
 fig2 = figure(2);
 plot(f, dbv(specHW(1:end/2)));
 axis([0 0.06 -150 0]);
+%xscale log;
 grid on;
 ylabel('dBFS');
 xlabel('f/fs');
@@ -128,6 +162,8 @@ HBF1 = dsp.FIRFilter('Numerator',HBF1num);
 HBF2 = dsp.FIRFilter('Numerator',HBF2num);
 view = fvtool(Hsinc3, Hdcf, HBF1, HBF2);
 legend(view,'Sinc3', 'DCF', 'HBF1', 'HBF2')
+
+%% ab hier ist nicht mehr correct, falsche decimation bzw. keine, nur filterung!!!
 %% simulink mdl sim (with decimation)
 
 mdl = 'dsm_l2_sim_deci';    % 2. Order + decimation
@@ -142,17 +178,19 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 
 ysim2 = simOut.y;
 vsim2 = simOut.v;
-
+ydsim2 = simOut.y1;
 %% time domain plot sim 2
 fig3 = figure(3);
 tsamples = 0:N/2;
 stairs(tsamples, u(tsamples+1));
 hold on;
 stairs(tsamples, vsim2(tsamples+1));
+%stairs(tsamples, ydsim2(tsamples+1));
+%stairs(tsamples, ysim2(tsamples+1));
 hold off;
-axis([0 N/2 -1.2 1.2])
+%axis([0 N/2 -1.2 1.2])
 %xlim([0 100]);
-legend('u', 'vsim');
+legend('u', 'vsim','ysim');
 grid();
 
 %% Spectral analysis Windowed sim2
@@ -186,8 +224,8 @@ xlabel('f/fs');
 title ('Windowed Spectral analysis')
 legend('spectrum without decimation', 'spectrum with decimation')
 
-%%
-
+%% CIC Sinc3
+frame_l = length(u);
 mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
 %open_system(mdl);
 
@@ -199,22 +237,30 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim3 = simOut.v;
-y1sim = simOut.y1;
-y2sim = simOut.y2;
+y1sim3 = simOut.y1;
+y2sim3 = simOut.y2;
 
 %% time domain plot sim 2
 fig5 = figure(5);
 vsim3_len = length(vsim3);
-y1sim_len = length(y1sim);
-y2sim_len = length(y2sim);
-tsamples = 0:vsim3_len-1;
-tsamples2 = 0:vsim3_len-1;
-tsamples3 = 0:vsim3_len-1;
-stairs(tsamples, vsim3(tsamples+1));
+y1sim_len = length(y1sim3);
+y2sim_len = length(y2sim3);
+ydsim2_len = length(ydsim2);    % reff signal after Sinc3
+tsamples = 0:N/2;
+tsamples1 = 0:vsim3_len-1;
+tsamples2 = 0:y1sim_len-1;
+tsamples3 = 0:y2sim_len-1;
+tsamplesR = 0: ydsim2_len -1;
+stairs(tsamples1, vsim3(tsamples1+1));
 hold on;
-stairs(tsamples, y1sim(tsamples+1));
-stairs(tsamples, y2sim(tsamples+1));
+stairs(tsamplesR, ydsim2(tsamplesR+1));
+%stairs(tsamples3, y2sim3(tsamples3+1));
 hold off;
-%axis([0 N/2 -1.2 1.2])
-xlim([0 100]);
+axis([0 N/2 -1.2 1.2])
+legend('vsim3(after deci)', 'ydsim2(ref. after deci)','y2sim3');
+%xlim([0 100]);
 grid();
+
+% warum sind es nur 64 werte nach dem cic decimator und nicht 8192?
+% schaltung new designen von sample based -> Frame based !!!
+% wie bekommt man verilog in xscham?
