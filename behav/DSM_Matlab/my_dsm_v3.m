@@ -115,7 +115,6 @@ v2_len = length(vsim2);
 sq = abs(fft(vsim2));
 % Remove redundant half of spectrum and normalize to FS
 f = (0:v2_len/2-1)/v2_len;  % frequency vector
-z = exp(2i*pi*f);
 sq_hlf = sq(1:end/2)/(v2_len/2);
 sqdBFS = 20*log10(sq_hlf);
 % log10(0) -> -inf/inf correction
@@ -143,7 +142,8 @@ CICFilter = dsp.CICDecimator( Nsinc, 1, 3);
 fvtool(Hsinc3, CICFilter)
 %% CIC Sinc3
 frame_l = length(u);
-mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
+%mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
+mdl = 'dsm_l2_sim_deci_cic_HDL';
 open_system(mdl);
 
 load_system(mdl);
@@ -160,16 +160,31 @@ y2sim3 = simOut.y2;
 %% time domain plot sim 2
 fig5 = figure(5);
 temp_ref = 0:(length(ydsim2)-1);
-temp_cic = 0:(length(vsim3)-1);
-temp_cic_alt = 0:(length(y1sim3)-1);
-stairs(temp_ref, ydsim2', 'r--')
+temp_cic_v = 0:(length(vsim3)-1);
+temp_cic = 0:(length(y2sim3)-1);
+%stairs(temp_ref, ydsim2', 'r--')
 hold on;
-stairs(temp_cic, vsim3, 'b')
-stairs(temp_cic_alt, y1sim3, 'g')
-grid;
+%stairs(temp_cic, y2sim3, 'b')
+stairs(temp_cic_v, vsim3, 'g')
+grid();
+
+%% plot with hdl decimator
+vsim3_len = length(vsim3);
+fig6 = figure(6);
+temp_cic_v = 0:(length(vsim3)-1);
+plot(temp_cic_v, vsim3, 'b')
+axis([0 vsim3_len -1.2 1.2])
+grid();
 
 % der gain nach den cic ist der struktur selbst zu schulden!
 % warum sind es nur 64 werte nach dem cic decimator und nicht 8192?
 % -> fir sinc decimiert nicht! 
 % ich kann ein sinc nicht einfach als fir bauen -> NEIN
 % wie bekommt man verilog in xscham?
+
+% neue aufgaben
+% SNR neu berechnen bei allen
+% frequenzsprecturm erstellen von allen
+% alle zusammen plotten
+% generell code aufreumen
+% code genereien
