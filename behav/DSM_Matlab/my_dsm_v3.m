@@ -187,4 +187,4 @@ grid();
 % frequenzsprecturm erstellen von allen
 % alle zusammen plotten
 % generell code aufreumen
-% code genereien
+% code genereien (VHDL/Verilog)
