@@ -38,7 +38,7 @@ c2 = c(2);
 
 % simulink mdl sim (no decimation)
 mdl = 'dsm_l2_sim_v2';    % 2. Order
-%open_system(mdl);
+open_system(mdl);
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'StopTime', num2str(max(t)), ...
