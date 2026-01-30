@@ -160,13 +160,13 @@
     0
   ],
   "ResourceSummary": {
-    "multipliers": 18,
-    "addersSubtractors": 81,
-    "registers": 526,
-    "oneBitRegisters": 18576,
+    "multipliers": 17,
+    "addersSubtractors": 79,
+    "registers": 514,
+    "oneBitRegisters": 7133,
     "rams": 0,
-    "multiplexers": 233,
-    "IOBits": 140,
+    "multiplexers": 231,
+    "IOBits": 24,
     "staticShiftOperators": 2,
     "dynamicShiftOperators": 0
   }
