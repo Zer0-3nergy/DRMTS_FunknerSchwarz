@@ -163,10 +163,10 @@
     "multipliers": 17,
     "addersSubtractors": 79,
     "registers": 514,
-    "oneBitRegisters": 7133,
+    "oneBitRegisters": 7181,
     "rams": 0,
     "multiplexers": 231,
-    "IOBits": 24,
+    "IOBits": 38,
     "staticShiftOperators": 2,
     "dynamicShiftOperators": 0
   }

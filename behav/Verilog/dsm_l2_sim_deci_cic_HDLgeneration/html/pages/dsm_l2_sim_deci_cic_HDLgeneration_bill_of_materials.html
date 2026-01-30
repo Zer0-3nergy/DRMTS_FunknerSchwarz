@@ -179,7 +179,7 @@ Registers
 Total 1-Bit Registers
 </td>
 <td align="center" valign="top" style="border-style: none">
-7133
+7181
 </td>
 
 </tr>
@@ -206,7 +206,7 @@ Multiplexers
 I/O Bits
 </td>
 <td align="center" valign="top" style="border-style: none">
-24
+38
 </td>
 
 </tr>
@@ -258,7 +258,13 @@ Multipliers (17)
 Adders/Subtractors (79)
 </h5>
 <span style="font-family:monospace">
-24x24-bit Adder 							: 6
+36x36-bit Adder 							: 2
+</span>
+<br /><span style="font-family:monospace">
+29x29-bit Adder 							: 2
+</span>
+<br /><span style="font-family:monospace">
+24x24-bit Adder 							: 2
 </span>
 <br /><span style="font-family:monospace">
 9x9-bit Adder 							: 1
@@ -300,13 +306,19 @@ Adders/Subtractors (79)
 Registers (514)
 </h5>
 <span style="font-family:monospace">
-2-bit Register 							: 3
+16-bit Register 							: 50
 </span>
 <br /><span style="font-family:monospace">
 1-bit Register 							: 177
 </span>
 <br /><span style="font-family:monospace">
-24-bit Register 							: 6
+36-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+29-bit Register 							: 2
+</span>
+<br /><span style="font-family:monospace">
+24-bit Register 							: 2
 </span>
 <br /><span style="font-family:monospace">
 9-bit Register 							: 1
@@ -327,9 +339,6 @@ Registers (514)
 39-bit Register 							: 7
 </span>
 <br /><span style="font-family:monospace">
-16-bit Register 							: 49
-</span>
-<br /><span style="font-family:monospace">
 33-bit Register 							: 26
 </span>
 <br /><span style="font-family:monospace">
@@ -337,6 +346,9 @@ Registers (514)
 </span>
 <br /><span style="font-family:monospace">
 48-bit Register 							: 7
+</span>
+<br /><span style="font-family:monospace">
+2-bit Register 							: 2
 </span>
 <br /><span style="font-family:monospace">
 35-bit Register 							: 10
@@ -402,13 +414,13 @@ Number of Shift operators (2)
 Static Shift Right 							: 2
 </span>
 <br /><h5>
-Number of I/O Bits (24)
+Number of I/O Bits (38)
 </h5>
 <span name="collapsible" id="collapsible" style="font-family:monospace" onclick="hdlTableShrink(this, 'Input_Port')" onmouseover="this.style.cursor = 'pointer'">
 [+]
 </span>
 <span style="font-family:monospace">
-Number of Input Bits: 6
+Number of Input Bits: 20
 </span>
 <span name="Input_Port" id="Input_Port">
 <ul>
@@ -425,7 +437,7 @@ clk_enable: 1 bit
 <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'dsm_l2_sim_deci_cic_HDLgeneration:1742\')'})"  name="code2model" class="code2model">
 In1
 </a>
-: 2 bits
+: 16 bits
 </li>
 <li>
 <a href="javascript: void(0)" onclick="postParentWindowMessage({message:'legacyMCall', expr:'coder.internal.code2model(\'dsm_l2_sim_deci_cic_HDLgeneration:1743\')'})"  name="code2model" class="code2model">

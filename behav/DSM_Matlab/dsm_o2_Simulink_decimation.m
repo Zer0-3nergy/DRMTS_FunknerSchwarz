@@ -69,7 +69,7 @@ fprintf('HBF2 Order: %d\n', length(HBF2num));
 %% simulink mdl sim (with ideal decimation)
 
 mdl = 'dsm_l2_sim_deci_v2';    % 2. Order + decimation
-open_system(mdl);
+%open_system(mdl);
 
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
