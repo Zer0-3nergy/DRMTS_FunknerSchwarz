@@ -38,7 +38,7 @@ c2 = c(2);
 
 % simulink mdl sim (no decimation)
 mdl = 'dsm_l2_sim_v2';    % 2. Order
-open_system(mdl);
+%open_system(mdl);
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'StopTime', num2str(max(t)), ...
@@ -83,4 +83,26 @@ eq = isequal(vsim([10 end-1]),v([10 end-1])');
 disp('are Simulink mdl (no deci) and delsig equal?')
 disp(eq) % same exept first view values 
 
-%% spectral analysis and snr
+%% freq spectrum and snr
+u_new = u';
+w = hamming(N);
+vfft = fft(vsim.*w,N); v_half = vfft(1:end/2); v_dB = mag2db(abs(v_half));
+ufft = fft(u_new.*w,N); u_half = ufft(1:end/2); u_dB = mag2db(abs(u_half));
+f = (0:N/2-1)/N;
+f_u = fx/fs;
+
+% SNR
+SNR_sim = snr(vsim);
+
+figure();
+plot(f,v_dB, 'b');
+hold on;
+plot(f,u_dB, 'r--');
+hold off;
+grid();
+ylabel('dBFS'); xlabel('f/fs');
+xlim([0 0.01])
+title(sprintf('Frequency Sprectrum (Windowed): SNR = %.2f dB', SNR_sim));
+legend('ΣΔ Modulator (Simulink, no decimation)', 'Input Signal (reference)')
+
+

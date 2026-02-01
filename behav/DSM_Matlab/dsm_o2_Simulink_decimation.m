@@ -116,7 +116,7 @@ y1sim3 = simOut.y1; % valid signal
 y2sim3 = simOut.y2; % easy stairs plot with same lenght as input
 
 % removed zeros with valid signal
-vsim3_dec = vsim3(y1sim3);
+vsim3_dec = double(vsim3(y1sim3));
 
 % qick plot with hdl decimator
 plot_len3 = length(y2sim3);
@@ -136,13 +136,63 @@ fig3 = figure(3);
 ts_u = 0:(u_len-1);
 ts_v = 0:(v2_len-1);
 ts_v_HDL = 0:(v3_len-1);
-plot(ts_u, u_down(ts_u+1));
+plot(ts_u, u_down(ts_u+1),'r--');
 hold on;
-plot(ts_v, vsim2(ts_v+1), '-x');
-plot(ts_v_HDL, vsim3_dec(ts_v_HDL+1), '-+');
+plot(ts_v, vsim2(ts_v+1), 'b-x');
+plot(ts_v_HDL, vsim3_dec(ts_v_HDL+1), 'g-+');
 hold off;
 axis([0 u_len -1.2 1.2])
 %xlim([0 100]);
 legend('u downsampled', 'vsim', 'vsim HDL');
 grid();
-%% spectral analysis and snr
+
+%% frequency spectrum + SNR
+u_ref = downsample(u',M);
+f_out = fs/M; % out sample freq.
+f_peak = fx/f_out; % freq. of signal u
+
+Nr = length(u_ref); N2 = length(vsim2); N3 = length(vsim3_dec);
+N_min = min([Nr, N2, N3]);
+
+% bring all signals to same lenght!
+ref_sig = u_ref(1:N_min);
+sig1_ideal = vsim2(1:N_min);
+sig2_hdl = vsim3_dec(1:N_min);
+
+Nfft = 2048;
+
+w = hamming(N_min); 
+
+ufft = fft(ref_sig.*w,Nfft); 
+vfft2 = fft(sig1_ideal.*w,Nfft); 
+vfft3 = fft(sig2_hdl.*w,Nfft);
+
+u_half = ufft(1:Nfft/2); 
+v2_half = vfft2(1:Nfft/2); 
+v3_half = vfft3(1:Nfft/2);
+
+u_dB = mag2db(abs(u_half)); 
+v2_dB = mag2db(abs(v2_half)); 
+v3_dB = mag2db(abs(v3_half));
+
+f = (0:Nfft/2-1)/Nfft;
+
+snr_hdl2 = snr(vsim2);
+snr_hdl3 = snr(vsim3_dec);
+
+% plot
+figure();
+plot(f,u_dB, 'r--');
+hold on;
+plot(f,v2_dB, 'b','LineWidth',1.5);
+plot(f,v3_dB, 'g','LineWidth',1.5);
+hold off;
+grid();
+ylabel('dBFS'); xlabel('f/fs');
+%xlim([0 50])
+title(sprintf('Frequency Sprectrum (Windowed): f = %.2f Hz', f_peak));
+legend('Input Signal (reference, downsampeled)', ...
+    sprintf('ΣΔ Modulator (Simulink), SNR = %.2f dB',snr_hdl2), ...
+    sprintf('ΣΔ Modulator (Simulink, HDL), SNR = %.2f dB', snr_hdl3))
+
+
