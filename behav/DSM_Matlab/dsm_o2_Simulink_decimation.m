@@ -7,7 +7,7 @@ L = 2;                  % Order of modulator
 form = 'CIFB';          % Cascade of integrator feedback
 fs = 1e6;               % Sampling frequency 
 M = 512;                % OSR
-res = 128;              % how many output samples
+res = 1024;              % how many output samples
 N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
 cycles = 3;             % Number of sinusoids
@@ -17,7 +17,8 @@ Ts  = 1/fs;             % time step
 
 % test Signal
 t = 0:Ts:(N-1)/fs;      
-u = A * sin(2 * pi * fx/fs * (0:N-1));
+%u = A * sin(2 * pi * fx/fs * (0:N-1));
+u = A * sin(2 * pi * 200 .*t); % time signal
 
 % Design NTF
 H = synthesizeNTF(L, M);
@@ -69,7 +70,7 @@ fprintf('HBF2 Order: %d\n', length(HBF2num));
 %% simulink mdl sim (with ideal decimation)
 
 mdl = 'dsm_l2_sim_deci_v2';    % 2. Order + decimation
-%open_system(mdl);
+open_system(mdl);
 
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
@@ -94,8 +95,8 @@ stairs(ts_u, u_down(ts_u+1));
 hold on;
 stairs(ts_v, vsim2(ts_v+1));
 hold off;
-axis([0 u_len -1.2 1.2])
-%xlim([0 100]);
+%axis([0 u_len -1.2 1.2])
+xlim([0 100]);
 legend('u downsampled', 'vsim');
 grid();
 
@@ -142,7 +143,7 @@ plot(ts_v, vsim2(ts_v+1), 'b-x');
 plot(ts_v_HDL, vsim3_dec(ts_v_HDL+1), 'g-+');
 hold off;
 axis([0 u_len -1.2 1.2])
-%xlim([0 100]);
+xlim([0 100]);
 legend('u downsampled', 'vsim', 'vsim HDL');
 grid();
 
@@ -159,7 +160,7 @@ ref_sig = u_ref(1:N_min);
 sig1_ideal = vsim2(1:N_min);
 sig2_hdl = vsim3_dec(1:N_min);
 
-Nfft = 2048;
+Nfft = 1024;
 
 w = hamming(N_min); 
 
@@ -190,7 +191,7 @@ hold off;
 grid();
 ylabel('dBFS'); xlabel('f/fs');
 %xlim([0 50])
-title(sprintf('Frequency Sprectrum (Windowed): f = %.2f Hz', f_peak));
+title('Frequency Sprectrum (Windowed):');
 legend('Input Signal (reference, downsampeled)', ...
     sprintf('ΣΔ Modulator (Simulink), SNR = %.2f dB',snr_hdl2), ...
     sprintf('ΣΔ Modulator (Simulink, HDL), SNR = %.2f dB', snr_hdl3))
