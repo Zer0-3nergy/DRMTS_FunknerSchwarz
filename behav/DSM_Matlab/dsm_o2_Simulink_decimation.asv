@@ -7,7 +7,7 @@ L = 2;                  % Order of modulator
 form = 'CIFB';          % Cascade of integrator feedback
 fs = 1e6;               % Sampling frequency 
 M = 512;                % OSR
-res = 256;              % how many output samples
+res = 2;              % how many output samples
 N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
 cycles = 3;             % Number of sinusoids
@@ -96,7 +96,7 @@ hold on;
 stairs(ts_v, vsim2(ts_v+1));
 hold off;
 %axis([0 u_len -1.2 1.2])
-%xlim([0 100]);
+xlim([0 100]);
 legend('u downsampled', 'vsim');
 grid();
 
@@ -128,17 +128,24 @@ plot(temp_cic_y2, y2sim3, 'b')
 axis([0 plot_len3 -1.2 1.2])
 grid();
 %% time domain plot with all
-plot(u_down,'r--');
+u_down = downsample(u,M);
+u_len = length(u_down);
+v2_len = length(vsim2);
+v3_len = length(vsim3_dec);
+
+fig3 = figure(3);
+ts_u = 0:(u_len-1);
+ts_v = 0:(v2_len-1);
+ts_v_HDL = 0:(v3_len-1);
+plot(ts_u, u_down(ts_u+1),'r--');
 hold on;
-plot(vsim2, 'b-x');
-plot(vsim3_dec, 'g-+');
+plot(ts_v, vsim2(ts_v+1), 'b-x');
+plot(ts_v_HDL, vsim3_dec(ts_v_HDL+1), 'g-+');
 hold off;
 axis([0 u_len -1.2 1.2])
 xlim([0 100]);
 legend('u downsampled', 'vsim', 'vsim HDL');
 grid(); xlabel('Sample index'); ylabel('Amplitude');
-title('Time domain plot:')
-
 
 %% frequency spectrum + SNR
 u_ref = downsample(u',M);
