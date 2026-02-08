@@ -79,20 +79,21 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim3 = simOut.v;   % output is "zero padded"
-y1sim3 = simOut.y1; % valid signal
-y2sim3 = simOut.y2; % easy stairs plot with same lenght as input
+y1valid = simOut.y1; % valid signal
 
 % removed zeros with valid signal
-vsim3_dec = vsim3(y1sim3);
+vsim3_dec = vsim3(y1valid);
 
-% qick plot with hdl decimator
-plot_len3 = length(y2sim3);
-
+u_down = downsample(u, M);
 fig2 = figure(2);
-temp_cic_y2 = 0:(length(y2sim3)-1);
-plot(temp_cic_y2, y2sim3, 'b')
-axis([0 plot_len3 -1.2 1.2])
-grid();
+stairs(u_down, 'r--');
+hold on;
+stairs(vsim3_dec,'b');
+hold off;
+legend('u downsampled', 'vsim (HDL)');
+axis([0 res -1.2 1.2])
+grid(); xlabel('Sample index'); ylabel('Amplitude');
+title('Plot: Reference vs. HDL Sim.')
 
 %% hdl generation configuration
 % need to do this once and then save model

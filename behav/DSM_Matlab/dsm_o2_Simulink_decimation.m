@@ -17,8 +17,8 @@ Ts  = 1/fs;             % time step
 
 % test Signal
 t = 0:Ts:(N-1)/fs;      
-%u = A * sin(2 * pi * fx/fs * (0:N-1));
-u = A * sin(2 * pi * 200 .*t); % time signal
+u = A * sin(2 * pi * fx/fs * (0:N-1));
+%u = A * sin(2 * pi * 200 .*t); % time signal
 
 % Design NTF
 H = synthesizeNTF(L, M);
@@ -69,7 +69,7 @@ fprintf('HBF2 Order: %d\n', length(HBF2num));
 
 %% simulink mdl sim (with ideal decimation)
 
-mdl = 'dsm_l2_sim_deci_v2';    % 2. Order + decimation
+mdl = 'dsm_l2_sim_deci_ideal_v2';    % 2. Order + decimation
 open_system(mdl);
 
 load_system(mdl);
@@ -84,21 +84,17 @@ ysim2 = simOut.y;
 ydsim2 = simOut.y1; % signal right after sinc3
 
 % time domain plot sim 2
-u_down = downsample(u,M);
-u_len = length(u_down);
-v2_len = length(vsim2);
-
+u_down = downsample(u, M);
 fig1 = figure(1);
-ts_u = 0:(u_len-1);
-ts_v = 0:(v2_len-1);
-stairs(ts_u, u_down(ts_u+1));
+stairs(u_down, 'r--');
 hold on;
-stairs(ts_v, vsim2(ts_v+1));
+stairs(vsim2, 'b');
 hold off;
-%axis([0 u_len -1.2 1.2])
+axis([0 res -1.2 1.2])
 %xlim([0 100]);
-legend('u downsampled', 'vsim');
-grid();
+legend('u downsampled', 'vsim (Ideal)');
+grid(); xlabel('Sample index'); ylabel('Amplitude');
+title('Plot: Reference vs. Ideal Sim.')
 
 %% simulink mdl sim (with HDL decimation)
 %mdl = 'dsm_l2_sim_deci_cic';    % 2. Order + decimation
@@ -113,31 +109,34 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim3 = simOut.v;   % output is "zero padded"
-y1sim3 = simOut.y1; % valid signal
-y2sim3 = simOut.y2; % easy stairs plot with same lenght as input
+y1valid = simOut.y1; % valid signal
 
 % removed zeros with valid signal
-vsim3_dec = double(vsim3(y1sim3));
+vsim3_dec = double(vsim3(y1valid));
 
-% qick plot with hdl decimator
-plot_len3 = length(y2sim3);
-
+u_down = downsample(u, M);
 fig2 = figure(2);
-temp_cic_y2 = 0:(length(y2sim3)-1);
-plot(temp_cic_y2, y2sim3, 'b')
-axis([0 plot_len3 -1.2 1.2])
-grid();
-%% time domain plot with all
-plot(u_down,'r--');
+stairs(u_down, 'r--');
 hold on;
-plot(vsim2, 'b-x');
-plot(vsim3_dec, 'g-+');
+stairs(vsim3_dec,'b');
 hold off;
-axis([0 u_len -1.2 1.2])
-xlim([0 100]);
-legend('u downsampled', 'vsim', 'vsim HDL');
+legend('u downsampled', 'vsim (HDL)');
+axis([0 res -1.2 1.2])
 grid(); xlabel('Sample index'); ylabel('Amplitude');
-title('Time domain plot:')
+title('Plot: Reference vs. HDL Sim.')
+%% time domain plot with all
+u_down = downsample(u, M);
+fig3 = figure(3);
+stairs(u_down,'r--');
+hold on;
+stairs(vsim2, 'b');
+stairs(vsim3_dec, 'g');
+hold off;
+axis([0 res -1.2 1.2])
+%xlim([0 100]);
+legend('u downsampled', 'vsim (Ideal)', 'vsim (HDL)');
+grid(); xlabel('Sample index'); ylabel('Amplitude');
+title('Plot: Reference vs. Ideal Sim. vs. HDL Sim.')
 
 
 %% frequency spectrum + SNR

@@ -17,8 +17,8 @@ Ts  = 1/fs;             % time step
 
 % test Signal
 t = 0:Ts:(N-1)/fs;      
-%u = A * sin(2 * pi * fx/fs * (0:N-1));
-u = A * sin(2 * pi * 200 .*t); % time signal
+u = A * sin(2 * pi * fx/fs * (0:N-1));
+%u = A * sin(2 * pi * 200 .*t); % time signal
 
 % Design NTF
 H = synthesizeNTF(L, M);
@@ -39,7 +39,7 @@ c2 = c(2);
 
 % simulink mdl sim (no decimation)
 mdl = 'dsm_l2_sim_v2';    % 2. Order
-%open_system(mdl);
+open_system(mdl);
 load_system(mdl);
 simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'StopTime', num2str(max(t)), ...
@@ -49,15 +49,6 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 
 ysim = simOut.y;
 vsim = simOut.v;
-
-% signal vor Comperator
-figure();
-hold on;
-plot(ysim,'b');
-plot(u,'r', LineWidth= 2);
-hold off;
-grid();
-
 %% compare simulink mdl (no decimation) with delsig toolbox simulation of DSM
 [v, xn, xmax, y] = simulateDSM(u, ABCD);
 % y is bevor comp.!

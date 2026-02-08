@@ -48,7 +48,7 @@ v_threshold = abs(v_low + v_high)/2;
 v_bit = data_v > v_threshold;   % quantazation
 u = 2*double(v_bit) -1;         % new range: from: 1,0 to +1,-1
 
-figure();
+input_fig = figure(1);
 subplot(211)
 plot(data_t/1e-3,data_v)
 hold on;
@@ -56,6 +56,7 @@ plot(data_t/1e-3, v_ref, 'g', LineWidth= 2)
 hold off;
 xlabel('t/ms'); ylabel('V')
 legend('ΣΔ Modulator out (spice)', 'reference signal in')
+title('Plot: Inputdata')
 
 subplot(212)
 plot(data_t/1e-3,u, 'r')
@@ -104,11 +105,11 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim = simOut.v;   % output is "zero padded"
-y1sim = simOut.y1; % valid signal
-y2sim = simOut.y2; % easy stairs plot with same lenght as input
+y1valid = simOut.y1; % valid signal
+
 
 % removed zeros with valid signal
-vsim_dec = double(vsim(y1sim));
+vsim_dec = double(vsim(y1valid));
 
 disp('Simulation done')
 %% time plot, frequenzy plot and snr
@@ -116,14 +117,14 @@ disp('Simulation done')
 % referenze signal, downsampeled and offset removed!
 v_reff_down = downsample(v_ref,512); v_dc = mean(v_reff_down); v_reff_norm = v_reff_down - v_dc;
 
-time_fig = figure(1);
+time_fig = figure(2);
 plot(vsim_dec,'b')
 hold on;
 plot(v_reff_norm, 'r--');
 hold off;
 grid(); xlabel('Sample index'); ylabel('Amplitude');
 legend('decimator out', 'v-reff (downsampeled)');
-title(sprintf('Time domain plot: A = %.d, f = %.d Hz', A_ref, f_ref))
+title(sprintf('Plot: after decimation (Signal in: A = %.2f, f = %.2f Hz)', A_ref, f_ref))
 
 % frequency plot
 Nv = length(vsim_dec); N_reff = length(v_reff_norm);
@@ -147,7 +148,7 @@ v_db = mag2db(abs(vfft_h));
 
 f = (0:Nfft/2-1)/Nfft;
 
-fft_fig = figure(2);
+fft_fig = figure(3);
 plot(f,v_db, 'b');
 hold on;
 plot(f,v_reff_db, 'r--')
@@ -159,5 +160,5 @@ title('Frequency Sprectrum (Windowed):');
 legend('Decimator out', 'Input Signal (reference, downsampeled)')
 
 % snr
-snr_fig = figure(3);
+snr_fig = figure(4);
 snr(vsim_dec)
