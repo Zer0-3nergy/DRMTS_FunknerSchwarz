@@ -35,6 +35,12 @@ data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 % ref signal
 A_ref = 1; DC_ref = 1.5; f_ref = 500;
 v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as data!
+
+%% data xscham
+data = readtable('spice_data/data.csv');
+data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v);
+A_ref = 0.8; f_ref = 200;
+
 %%
 % 'quantasation' of data
 % in simulink there is no quantasation step, only a chnage from double to
