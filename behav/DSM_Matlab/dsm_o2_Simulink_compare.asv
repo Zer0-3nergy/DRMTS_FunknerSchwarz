@@ -50,11 +50,11 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 ysim = simOut.y;
 vsim = simOut.v;
 
-% signal vor Comperator
+% signal vor Comperat
 figure();
-hold on;
 plot(ysim,'b');
-plot(u,'r', LineWidth= 2);
+hold on;
+%plot(u,'r', LineWidth= 2);
 hold off;
 grid();
 
