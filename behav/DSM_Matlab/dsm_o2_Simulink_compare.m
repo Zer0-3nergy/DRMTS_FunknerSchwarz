@@ -51,6 +51,13 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
 
 ysim = simOut.y;
 vsim = simOut.v;
+qsim = simOut.q;
+
+%%
+figure()
+plot(qsim)
+grid();
+xlim([0 length(qsim)]);
 %% compare simulink mdl (no decimation) with delsig toolbox simulation of DSM
 [v, xn, xmax, y] = simulateDSM(u, ABCD);
 % y is bevor comp.!
@@ -103,7 +110,7 @@ plot(f,u_dB, 'r--');
 hold off;
 grid();
 ylabel('dBFS'); xlabel('f/fs');
-xlim([0 0.01])
+%xlim([0 0.01])
 title(sprintf('Frequency Sprectrum (Windowed): SNR = %.2f dB', SNR_sim));
 legend('ΣΔ Modulator (Simulink, no decimation)', 'Input Signal (reference)')
 

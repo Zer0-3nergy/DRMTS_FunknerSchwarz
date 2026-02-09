@@ -17,11 +17,6 @@ data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 Ts = mean(diff(data_t));
 fs = 1/Ts;
 
-fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
-sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
-resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
-after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
-
 % ref signal
 A_ref = 1.4; DC_ref = 1.5; f_ref = 500;
 v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as data!
@@ -34,11 +29,6 @@ data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
 Ts = mean(diff(data_t));
 fs = 1/Ts;
-
-fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
-sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
-resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
-after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
 
 % ref signal
 A_ref = 0.8; DC_ref = 1.5; f_ref = 200;
@@ -53,16 +43,11 @@ data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 Ts = mean(diff(data_t));
 fs = 1/Ts;
 
-fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
-sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
-resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
-after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
-
 % ref signal
 A_ref = 1; DC_ref = 1.5; f_ref = 500;
 v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as data!
 
-%% data Xscham
+%% data Xscham ideal: comp | real: Ota, sw, inv
 data = readtable('spice_data/data.csv');
 data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v);
 
@@ -70,11 +55,14 @@ A_ref = 0.8; f_ref = 200;
 
 Ts = mean(diff(data_t));
 fs = 1/Ts;
+%% data Xscham ideal: Ota, comp | real: sw, inv
+data = readtable('spice_data/data_new.csv');
+data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v);
 
-fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
-sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
-resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
-after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
+A_ref = 0.8; f_ref = 200;
+
+Ts = mean(diff(data_t));
+fs = 1/Ts;
 %%
 % 'quantasation' of data
 % in simulink there is no quantasation step, only a chnage from double to
@@ -220,7 +208,7 @@ hold on;
 plot(f_real,v_reff_db, 'r--')
 hold off;
 grid(); 
-ylabel('dBFS'); xlabel('f/Hz');
+ylabel('dB'); xlabel('f/Hz');
 %xlim([0 1000])
 title('Frequency Sprectrum (Windowed):');
 legend(sprintf('Decimator out: f = %.2f Hz',freq_peak), ...

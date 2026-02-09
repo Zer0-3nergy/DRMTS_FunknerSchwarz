@@ -184,7 +184,7 @@ plot(f_real,v2_dB, 'b','LineWidth',1.5);
 plot(f_real,v3_dB, 'g','LineWidth',1.5);
 hold off;
 grid();
-ylabel('dBFS'); xlabel('f/Hz');
+ylabel('dB'); xlabel('f/Hz');
 %xlim([0 50])
 title('Frequency Sprectrum (Windowed):');
 legend('Input Signal (reference, downsampeled)', ...
