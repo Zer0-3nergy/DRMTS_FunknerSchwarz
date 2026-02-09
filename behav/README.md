@@ -4,8 +4,7 @@ the decimation stage, as well as models for generating the decimation stage in a
 (Verilog/VHDL). <br>
 
 The focus lies on: <br>
-- recreating a Sigma-Delta Modulator based on the example described in  
-  *Understanding Delta-Sigma Data Converters, R. Schreier, 2005*, <br>
+- recreating a Sigma-Delta Modulator based on the example described in *Schreier’s book from 2005 in chapter 9 [1]*, <br>
 - designing a decimator consisting of one SINC3 and two halfband filters to reconstruct the
   signal from the modulator output and to decimate the oversampled signal back to an output
   sampling frequency of 1 kHz (M = 512), <br>
@@ -63,3 +62,6 @@ HDL code generation.
 - Signal Processing Toolbox
 - Simulink
 
+---
+### References:
+[1]: R. Schreier and G. C. Temes, Understanding Delta-Sigma Data Converters. Wiley-IEEE Press, Nov. 2005, p. 464, isbn: 0-471-46585-0
