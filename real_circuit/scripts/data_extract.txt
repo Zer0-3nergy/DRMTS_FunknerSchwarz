@@ -1,0 +1,6 @@
+xschem -x -q --command '
+source scripts/get_raw_data.tcl
+write_data \
+[get_raw_data simulations/analog_out.raw tran {time vin vout} -1] \
+data.csv
+'
