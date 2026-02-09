@@ -1,13 +1,13 @@
 LTspice 24.0.12 for Windows
-Circuit: * C:\Users\Eduard\workspace\DRMTS_FunknerSchwarz\ideal_circuit\spice\sim3_switched_capacitor.asc
-Start Time: Thu Jan 22 21:33:27 2026
+Circuit: * C:\Users\eduar\Desktop\DRMS\Endgame\ideal\spice\sim3_switched_capacitor.asc
+Start Time: Mon Feb  9 18:58:00 2026
 solver = Normal
 Maximum thread count: 16
 tnom = 27
 temp = 27
-method = trap
+method = modified trap
 WARNING: Less than two connections to node out.  This node is used by b:x3:1.
-Per .tran options, skipping operating point for transient analysis.
+Direct Newton iteration for .op point succeeded.
 Ignoring empty pin current: Ix(x4:vinm)
 Ignoring empty pin current: Ix(x4:vinp)
 Ignoring empty pin current: Ix(x4:vdd)
@@ -20,5 +20,21 @@ Ignoring empty pin current: Ix(x2:vinp)
 Ignoring empty pin current: Ix(x3:vdd)
 Ignoring empty pin current: Ix(x3:vss)
 Ignoring empty pin current: Ix(x3:in)
-Total elapsed time: 1.217 seconds.
+Ignoring empty pin current: Ix(x5:vinm)
+Ignoring empty pin current: Ix(x5:vinp)
+Ignoring empty pin current: Ix(x4:vinm)
+Ignoring empty pin current: Ix(x4:vinp)
+Ignoring empty pin current: Ix(x4:vdd)
+Ignoring empty pin current: Ix(x4:clock)
+Ignoring empty pin current: Ix(x1:vdd)
+Ignoring empty pin current: Ix(x1:vss)
+Ignoring empty pin current: Ix(x1:in)
+Ignoring empty pin current: Ix(x2:vinm)
+Ignoring empty pin current: Ix(x2:vinp)
+Ignoring empty pin current: Ix(x3:vdd)
+Ignoring empty pin current: Ix(x3:vss)
+Ignoring empty pin current: Ix(x3:in)
+Ignoring empty pin current: Ix(x5:vinm)
+Ignoring empty pin current: Ix(x5:vinp)
+Total elapsed time: 6.362 seconds.
 
