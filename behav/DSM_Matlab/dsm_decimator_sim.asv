@@ -3,14 +3,24 @@ clc;
 clear;
 close all;
 
-fs = 1e6;
-Ts = 1/fs;
+%fs = 1e6;
+%Ts = 1/fs;
+M = 512;
 
-%% load data: overdrive! Amp to hight
+
+%% load data: overdrive! Amp to hight LT
 data = readmatrix('spice_data/ideal_out.txt', 'FileType', 'text', 'NumHeaderLines', 1);
 
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
+
+Ts = mean(diff(data_t));
+fs = 1/Ts;
+
+fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
+sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
+resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
+after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
 
 % ref signal
 A_ref = 1.4; DC_ref = 1.5; f_ref = 500;
@@ -22,6 +32,14 @@ data = readmatrix('spice_data/08_Amp_200Hz.txt', 'FileType', 'text', 'NumHeaderL
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
+Ts = mean(diff(data_t));
+fs = 1/Ts;
+
+fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
+sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
+resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
+after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
+
 % ref signal
 A_ref = 0.8; DC_ref = 1.5; f_ref = 200;
 v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as data!
@@ -32,9 +50,31 @@ data = readmatrix('spice_data/1_Amp_500Hz.txt', 'FileType', 'text', 'NumHeaderLi
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
+Ts = mean(diff(data_t));
+fs = 1/Ts;
+
+fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
+sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
+resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
+after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
+
 % ref signal
 A_ref = 1; DC_ref = 1.5; f_ref = 500;
 v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as data!
+
+%% data xscham
+data = readtable('spice_data/data.csv');
+data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v);
+
+A_ref = 0.8; f_ref = 200;
+
+Ts = mean(diff(data_t));
+fs = 1/Ts;
+
+fprintf('Sample Freq. of data: fs = %.2f MHz\n', fs/1e6);
+sim_time = data_N/fs; fprintf('Sim time: %.f ms\n', sim_time/1e-3);
+resample_val = data_N/fs *1e6; fprintf('Num val after resample to 1Mhz: %.f Samples\n', resample_val);
+after_deci = resample_val / M; fprintf('Num val after decimation with M = %.f: %.2f Samples\n', M,after_deci);
 %%
 % 'quantasation' of data
 % in simulink there is no quantasation step, only a chnage from double to
@@ -43,23 +83,42 @@ v_ref = A_ref * sin(2*pi*f_ref*data_t) +DC_ref; % ref signal uses same time as d
 % the decimination step, because the decimator is digital.
 % mapping should be: high (3V) -> +1, low (0V) -> -1
 
+% resample data:
+%t_sample = data_t(1) : Ts : data_t(end);
+%v_sample = interp1(data_t, data_v, t_sample, 'previous');
+%data_N = numel(v_sample);
+
+% quantesize data:
+%v_high = max(v_sample); v_low = min(v_sample);
+%v_threshold = abs(v_low + v_high)/2;
+%v_bit = v_sample > v_threshold;   % quantazation
+%u = 2*double(v_bit) -1;         % new range: from: 1,0 to +1,-1
+
+% ref. input signal
+%v_ref = A_ref * sin(2*pi*f_ref*t_sample) +DC_ref; % ref signal uses same time as data!
+
+% quantesize data without interpolation:
 v_high = max(data_v); v_low = min(data_v);
 v_threshold = abs(v_low + v_high)/2;
 v_bit = data_v > v_threshold;   % quantazation
 u = 2*double(v_bit) -1;         % new range: from: 1,0 to +1,-1
 
-figure();
+t_sample = data_t; v_sample = data_v;
+
+input_fig = figure(1);
 subplot(211)
-plot(data_t/1e-3,data_v)
+plot(t_sample/1e-3,v_sample, 'b', LineWidth=0.5)
 hold on;
-plot(data_t/1e-3, v_ref, 'g', LineWidth= 2)
+plot(t_sample/1e-3, v_ref, 'g', LineWidth= 2)
 hold off;
 xlabel('t/ms'); ylabel('V')
 legend('ΣΔ Modulator out (spice)', 'reference signal in')
+title('Plot: Inputdata')
 
 subplot(212)
-plot(data_t/1e-3,u, 'r')
+plot(t_sample/1e-3,u, 'r', LineWidth=0.5)
 xlabel('t/ms'); ylabel('quantized level')
+ylim([-1.2 1.2]);
 legend('decimator in (spice)')
 
 % Decimator settings:
@@ -104,28 +163,27 @@ simOut = sim(mdl, 'Solver', 'FixedStepDiscrete', ...
     'SaveFormat', 'Dataset', 'LoadExternalInput', 'off');
 
 vsim = simOut.v;   % output is "zero padded"
-y1sim = simOut.y1; % valid signal
-y2sim = simOut.y2; % easy stairs plot with same lenght as input
+y1valid = simOut.y1; % valid signal
+
 
 % removed zeros with valid signal
-vsim_dec = double(vsim(y1sim));
+vsim_dec = double(vsim(y1valid));
 
 disp('Simulation done')
 %% time plot, frequenzy plot and snr
 % time plot
 % referenze signal, downsampeled and offset removed!
-v_reff_down = downsample(v_ref,512); v_dc = mean(v_reff_down); v_reff_norm = v_reff_down - v_dc;
+v_reff_down = downsample(v_ref,M); v_dc = mean(v_reff_down); v_reff_norm = v_reff_down - v_dc;
+f_out = fs/M; % out sample freq.
 
-t_ref_down = 0:(lenght(v_reff_norm)-1);
-t_down = 0:(lenght(vsim_dec)-1);
-time_fig = figure(1);
+time_fig = figure(2);
 plot(vsim_dec,'b')
 hold on;
-plot(t_ref_down,v_reff_norm(t_ref_down), 'r--');
+plot(v_reff_norm, 'r--');
 hold off;
-grid();
+grid(); xlabel('Sample index'); ylabel('Amplitude');
 legend('decimator out', 'v-reff (downsampeled)');
-title(sprintf('Time domain plot: A = %.d, f = %.d Hz', A_ref, f_ref))
+title(sprintf('Plot: after decimation (Signal in: A = %.2f, f = %.2f Hz)', A_ref, f_ref))
 
 % frequency plot
 Nv = length(vsim_dec); N_reff = length(v_reff_norm);
@@ -135,7 +193,7 @@ N_min = min([Nv, N_reff]);
 ref_sig = v_reff_norm(1:N_min);
 deci_out = vsim_dec(1:N_min);
 
-Nfft = 1024;
+Nfft = 2^nextpow2(N_min);
 
 w = hamming(N_min);
 
@@ -147,19 +205,27 @@ vfft = fft(deci_out.*w,Nfft);
 vfft_h = vfft(1:Nfft/2); 
 v_db = mag2db(abs(vfft_h));
 
-f = (0:Nfft/2-1)/Nfft;
+f = (0:Nfft/2-1)/Nfft;     % nomalized freq. in f/fs
+f_real = f*f_out;          % real freq. in Hz
 
-fft_fig = figure(2);
-plot(f,v_db, 'b');
+% peaks:
+[~, idx] = max(v_db);
+[~, idx_ref] = max(v_reff_db);
+freq_peak = f_real(idx);
+freq_peak_ref = f_real(idx_ref);
+
+fft_fig = figure(3);
+plot(f_real,v_db, 'b');
 hold on;
-plot(f,v_reff_db, 'r--')
+plot(f_real,v_reff_db, 'r--')
 hold off;
 grid(); 
-ylabel('dBFS'); xlabel('f/fs');
-%xlim([0 0.1])
+ylabel('dBFS'); xlabel('f/Hz');
+%xlim([0 1000])
 title('Frequency Sprectrum (Windowed):');
-legend('Decimator out', 'Input Signal (reference, downsampeled)')
+legend(sprintf('Decimator out: f = %.2f Hz',freq_peak), ...
+    sprintf('Input Signal (reference, downsampeled): f = %.2f Hz',freq_peak_ref))
 
 % snr
-snr_fig = figure(3);
+snr_fig = figure(4);
 snr(vsim_dec)

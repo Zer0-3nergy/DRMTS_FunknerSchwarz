@@ -11,14 +11,16 @@ res = 256;              % how many output samples
 N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
 cycles = 3;             % Number of sinusoids
-fx = cycles * fs/N;     % Test tone
+fx = cycles * fs/N;     % Test tone freq.
 A = 0.8;                % Signal amplitude, was 0.8
 Ts  = 1/fs;             % time step
 
 % test Signal
 t = 0:Ts:(N-1)/fs;      
-u = A * sin(2 * pi * fx/fs * (0:N-1));
+u = A * sin(2 * pi * fx * t); % was A * sin(2 * pi * fx/fs * (0:N-1))
 %u = A * sin(2 * pi * 200 .*t); % time signal
+
+len_out = length(downsample(u,M));
 
 % Design NTF
 H = synthesizeNTF(L, M);
@@ -90,7 +92,7 @@ stairs(u_down, 'r--');
 hold on;
 stairs(vsim2, 'b');
 hold off;
-axis([0 res -1.2 1.2])
+axis([0 len_out -1.2 1.2])
 %xlim([0 100]);
 legend('u downsampled', 'vsim (Ideal)');
 grid(); xlabel('Sample index'); ylabel('Amplitude');
@@ -121,7 +123,7 @@ hold on;
 stairs(vsim3_dec,'b');
 hold off;
 legend('u downsampled', 'vsim (HDL)');
-axis([0 res -1.2 1.2])
+axis([0 len_out -1.2 1.2])
 grid(); xlabel('Sample index'); ylabel('Amplitude');
 title('Plot: Reference vs. HDL Sim.')
 %% time domain plot with all
@@ -132,7 +134,7 @@ hold on;
 stairs(vsim2, 'b');
 stairs(vsim3_dec, 'g');
 hold off;
-axis([0 res -1.2 1.2])
+axis([0 len_out -1.2 1.2])
 %xlim([0 100]);
 legend('u downsampled', 'vsim (Ideal)', 'vsim (HDL)');
 grid(); xlabel('Sample index'); ylabel('Amplitude');
@@ -142,7 +144,6 @@ title('Plot: Reference vs. Ideal Sim. vs. HDL Sim.')
 %% frequency spectrum + SNR
 u_ref = downsample(u',M);
 f_out = fs/M; % out sample freq.
-f_peak = fx/f_out; % freq. of signal u
 
 Nr = length(u_ref); N2 = length(vsim2); N3 = length(vsim3_dec);
 N_min = min([Nr, N2, N3]);
@@ -152,7 +153,7 @@ ref_sig = u_ref(1:N_min);
 sig1_ideal = vsim2(1:N_min);
 sig2_hdl = vsim3_dec(1:N_min);
 
-Nfft = 1024;
+Nfft = len_out;
 
 w = hamming(N_min); 
 
@@ -168,20 +169,22 @@ u_dB = mag2db(abs(u_half));
 v2_dB = mag2db(abs(v2_half)); 
 v3_dB = mag2db(abs(v3_half));
 
-f = (0:Nfft/2-1)/Nfft;
+% freq in Hz
+f = (0:Nfft/2-1)/Nfft;     % nomalized freq. in f/fs
+f_real = f*f_out;          % real freq. in Hz
 
 snr_hdl2 = snr(vsim2);
 snr_hdl3 = snr(vsim3_dec);
 
 % plot
 figure();
-plot(f,u_dB, 'r--');
+plot(f_real,u_dB, 'r--');
 hold on;
-plot(f,v2_dB, 'b','LineWidth',1.5);
-plot(f,v3_dB, 'g','LineWidth',1.5);
+plot(f_real,v2_dB, 'b','LineWidth',1.5);
+plot(f_real,v3_dB, 'g','LineWidth',1.5);
 hold off;
 grid();
-ylabel('dBFS'); xlabel('f/fs');
+ylabel('dBFS'); xlabel('f/Hz');
 %xlim([0 50])
 title('Frequency Sprectrum (Windowed):');
 legend('Input Signal (reference, downsampeled)', ...

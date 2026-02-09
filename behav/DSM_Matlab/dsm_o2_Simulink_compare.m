@@ -11,14 +11,16 @@ res = 16;               % og value = 16
 N = res*M;              % Simulation length (output samples), FFT points
 fB = fs/2/M;            % Bandwidth
 cycles = 3;             % Number of sinusoids
-fx = cycles * fs/N;     % Test tone
+fx = cycles * fs/N;     % Test tone freq.
 A = 0.8;                % Signal amplitude, was 0.8
 Ts  = 1/fs;             % time step
 
 % test Signal
 t = 0:Ts:(N-1)/fs;      
-u = A * sin(2 * pi * fx/fs * (0:N-1));
+u = A * sin(2 * pi * fx * t); % was A * sin(2 * pi * fx/fs * (0:N-1))
 %u = A * sin(2 * pi * 200 .*t); % time signal
+
+len_out = length(downsample(u,M));
 
 % Design NTF
 H = synthesizeNTF(L, M);
