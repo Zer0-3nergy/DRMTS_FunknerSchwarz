@@ -5,7 +5,7 @@ the decimation stage, as well as models for generating the decimation stage in a
 
 The focus lies on: <br>
 - recreating a Sigma-Delta Modulator based on the example described in  
-  *Understanding Delta-Sigma Data Converters, R. Schreier, 2009*, <br>
+  *Understanding Delta-Sigma Data Converters, R. Schreier, 2005*, <br>
 - designing a decimator consisting of one SINC3 and two halfband filters to reconstruct the
   signal from the modulator output and to decimate the oversampled signal back to an output
   sampling frequency of 1 kHz (M = 512), <br>
@@ -62,3 +62,4 @@ HDL code generation.
 - Mixed-Signal Blockset Models
 - Signal Processing Toolbox
 - Simulink
+
