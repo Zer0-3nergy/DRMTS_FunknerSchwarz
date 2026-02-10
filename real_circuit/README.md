@@ -60,6 +60,8 @@ A top-level circuit combining:
 * Transmission Gate (TG)
 * 5T OTA
 
+<img src="https://github.com/Zer0-3nergy/DRMTS_FunknerSchwarz/blob/main/img/cir.png">
+
 This schematic demonstrates the integration of the individual blocks into a complete modulator architecture.
 
 ---
