@@ -14,7 +14,9 @@ data = readmatrix('spice_data/ideal_out.txt', 'FileType', 'text', 'NumHeaderLine
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
-Ts = mean(diff(data_t));
+% because the stepsize of data > 1/1e6, fs needs to be estimated only for
+% later freq. calculation. In Xschem/LTSpice fs was 1e6 | 1MHz
+Ts = mean(diff(data_t));    % use mean because stepsize of data is not constant!!
 fs = 1/Ts;
 
 % ref signal
@@ -27,7 +29,9 @@ data = readmatrix('spice_data/08_Amp_200Hz.txt', 'FileType', 'text', 'NumHeaderL
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
-Ts = mean(diff(data_t));
+% because the stepsize of data > 1/1e6, fs needs to be estimated only for
+% later freq. calculation. In Xschem/LTSpice fs was 1e6 | 1MHz
+Ts = mean(diff(data_t));    % use mean because stepsize of data is not constant!!
 fs = 1/Ts;
 
 % ref signal
@@ -40,7 +44,9 @@ data = readmatrix('spice_data/1_Amp_500Hz.txt', 'FileType', 'text', 'NumHeaderLi
 % 'analog-signal' data
 data_v = data(:,2); data_t = data(:,1); data_N = numel(data_v);
 
-Ts = mean(diff(data_t));
+% because the stepsize of data > 1/1e6, fs needs to be estimated only for
+% later freq. calculation. In Xschem/LTSpice fs was 1e6 | 1MHz
+Ts = mean(diff(data_t));    % use mean because stepsize of data is not constant!!
 fs = 1/Ts;
 
 % ref signal
@@ -53,7 +59,9 @@ data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v)
 
 A_ref = 0.8; f_ref = 200;
 
-Ts = mean(diff(data_t));
+% because the stepsize of data > 1/1e6, fs needs to be estimated only for
+% later freq. calculation. In Xschem/LTSpice fs was 1e6 | 1MHz
+Ts = mean(diff(data_t));    % use mean because stepsize of data is not constant!!
 fs = 1/Ts;
 %% data Xscham ideal: Ota, comp | real: sw, inv
 data = readtable('spice_data/data_new.csv');
@@ -61,7 +69,9 @@ data_v = data.vout; data_t = data.time; v_ref = data.vin; data_N = numel(data_v)
 
 A_ref = 0.8; f_ref = 200;
 
-Ts = mean(diff(data_t));
+% because the stepsize of data > 1/1e6, fs needs to be estimated only for
+% later freq. calculation. In Xschem/LTSpice fs was 1e6 | 1MHz
+Ts = mean(diff(data_t));    % use mean because stepsize of data is not constant!!
 fs = 1/Ts;
 %%
 % 'quantasation' of data
@@ -71,7 +81,7 @@ fs = 1/Ts;
 % the decimination step, because the decimator is digital.
 % mapping should be: high (3V) -> +1, low (0V) -> -1
 
-% resample data:
+% resample data (interpolation):
 %t_sample = data_t(1) : Ts : data_t(end);
 %v_sample = interp1(data_t, data_v, t_sample, 'previous');
 %data_N = numel(v_sample);
@@ -126,7 +136,7 @@ DCFnum = Hdcf.Numerator;
 fprintf('DCF Order: %d\n', length(DCFnum));
 
 % Half-band filter 1 (HBF1)
-FsHBF1 = fs/Nsinc;
+FsHBF1 = 1e6/Nsinc;
 HBF1taps = 26;
 HBF1num = firhalfband(HBF1taps, 0.25);
 fprintf('HBF1 Order: %d\n', length(HBF1num));
@@ -162,7 +172,6 @@ disp('Simulation done')
 % time plot
 % referenze signal, downsampeled and offset removed!
 v_reff_down = downsample(v_ref,M); v_dc = mean(v_reff_down); v_reff_norm = v_reff_down - v_dc;
-f_out = fs/M; % out sample freq.
 
 time_fig = figure(2);
 plot(vsim_dec,'b')
@@ -193,6 +202,7 @@ vfft = fft(deci_out.*w,Nfft);
 vfft_h = vfft(1:Nfft/2); 
 v_db = mag2db(abs(vfft_h));
 
+f_out = fs/M; % out sample freq.
 f = (0:Nfft/2-1)/Nfft;     % nomalized freq. in f/fs
 f_real = f*f_out;          % real freq. in Hz
 

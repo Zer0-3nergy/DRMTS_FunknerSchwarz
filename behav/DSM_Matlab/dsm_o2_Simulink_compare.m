@@ -94,24 +94,27 @@ disp(eq) % same exept first view values
 
 %% freq spectrum and snr
 u_new = u';
+v_new = v';
 w = hamming(N);
 vfft = fft(vsim.*w,N); v_half = vfft(1:end/2); v_dB = mag2db(abs(v_half));
+delsig_fft = fft(v_new.*w,N); delsig_half = delsig_fft(1:end/2); delsig_dB = mag2db(abs(delsig_half));
 ufft = fft(u_new.*w,N); u_half = ufft(1:end/2); u_dB = mag2db(abs(u_half));
+
 f = (0:N/2-1)/N;
-f_u = fx/fs;
 
 % SNR
 SNR_sim = snr(vsim);
 
 figure();
-plot(f,v_dB, 'b');
+plot(f,v_dB, 'b',LineWidth=2);
 hold on;
+plot(f,delsig_dB, 'g:',LineWidth=1.5);
 plot(f,u_dB, 'r--');
 hold off;
 grid();
-ylabel('dBFS'); xlabel('f/fs');
-%xlim([0 0.01])
+ylabel('dB'); xlabel('f/fs');
+xlim([0 0.1])
 title(sprintf('Frequency Sprectrum (Windowed): SNR = %.2f dB', SNR_sim));
-legend('ΣΔ Modulator (Simulink, no decimation)', 'Input Signal (reference)')
+legend('ΣΔ Modulator (Simulink, no decimation)', 'ΣΔ Modulator (delsig-toolbox)', 'Input Signal (reference)')
 
 
