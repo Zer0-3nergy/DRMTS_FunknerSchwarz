@@ -186,7 +186,7 @@ hold off;
 grid();
 ylabel('dB'); xlabel('f/Hz');
 %xlim([0 50])
-title('Frequency Sprectrum (Windowed):');
+title('Frequency Spectrum (Windowed):');
 legend('Input Signal (reference, downsampeled)', ...
     sprintf('ΣΔ Modulator (Simulink), SNR = %.2f dB',snr_hdl2), ...
     sprintf('ΣΔ Modulator (Simulink, HDL), SNR = %.2f dB', snr_hdl3))

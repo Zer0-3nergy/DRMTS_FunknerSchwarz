@@ -81,24 +81,10 @@ fs = 1/Ts;
 % the decimination step, because the decimator is digital.
 % mapping should be: high (3V) -> +1, low (0V) -> -1
 
-% resample data (interpolation):
-%t_sample = data_t(1) : Ts : data_t(end);
-%v_sample = interp1(data_t, data_v, t_sample, 'previous');
-%data_N = numel(v_sample);
-
-% quantesize data:
-%v_high = max(v_sample); v_low = min(v_sample);
-%v_threshold = abs(v_low + v_high)/2;
-%v_bit = v_sample > v_threshold;   % quantazation
-%u = 2*double(v_bit) -1;         % new range: from: 1,0 to +1,-1
-
-% ref. input signal
-%v_ref = A_ref * sin(2*pi*f_ref*t_sample) +DC_ref; % ref signal uses same time as data!
-
-% quantesize data without interpolation:
+% quantasation without interpolation:
 v_high = max(data_v); v_low = min(data_v);
 v_threshold = abs(v_low + v_high)/2;
-v_bit = data_v > v_threshold;   % quantazation
+v_bit = data_v > v_threshold;   % quantasation
 u = 2*double(v_bit) -1;         % new range: from: 1,0 to +1,-1
 
 t_sample = data_t; v_sample = data_v;
@@ -171,33 +157,36 @@ disp('Simulation done')
 %% time plot, frequenzy plot and snr
 % time plot
 % referenze signal, downsampeled and offset removed!
-v_reff_down = downsample(v_ref,M); v_dc = mean(v_reff_down); v_reff_norm = v_reff_down - v_dc;
+v_ref_down = downsample(v_ref,M); v_dc = mean(v_ref_down); v_ref_norm = v_ref_down - v_dc;
 
 time_fig = figure(2);
 plot(vsim_dec,'b')
 hold on;
-plot(v_reff_norm, 'r--');
+plot(v_ref_norm, 'r--');
 hold off;
+xlim([0 length(v_ref_norm)])
 grid(); xlabel('Sample index'); ylabel('Amplitude');
 legend('decimator out', 'v-reff (downsampeled)');
 title(sprintf('Plot: after decimation (Signal in: A = %.2f, f = %.2f Hz)', A_ref, f_ref))
 
 % frequency plot
-Nv = length(vsim_dec); N_reff = length(v_reff_norm);
-N_min = min([Nv, N_reff]);
+Nv = length(vsim_dec); N_ref = length(v_ref_norm);
+N_min = min([Nv, N_ref]);
 
 % bring all signals to same lenght!
-ref_sig = v_reff_norm(1:N_min);
+ref_sig = v_ref_norm(1:N_min);
 deci_out = vsim_dec(1:N_min);
 
 Nfft = 2^nextpow2(N_min);
 
 w = hamming(N_min);
 
+% ref signal
 vfft_ref = fft(ref_sig.*w,Nfft); 
 vfft_ref_h = vfft_ref(1:Nfft/2); 
-v_reff_db = mag2db(abs(vfft_ref_h));
+v_ref_db = mag2db(abs(vfft_ref_h));
 
+% decimation signal
 vfft = fft(deci_out.*w,Nfft); 
 vfft_h = vfft(1:Nfft/2); 
 v_db = mag2db(abs(vfft_h));
@@ -208,19 +197,19 @@ f_real = f*f_out;          % real freq. in Hz
 
 % peaks:
 [~, idx] = max(v_db);
-[~, idx_ref] = max(v_reff_db);
+[~, idx_ref] = max(v_ref_db);
 freq_peak = f_real(idx);
 freq_peak_ref = f_real(idx_ref);
 
 fft_fig = figure(3);
 plot(f_real,v_db, 'b');
 hold on;
-plot(f_real,v_reff_db, 'r--')
+plot(f_real,v_ref_db, 'r--')
 hold off;
 grid(); 
 ylabel('dB'); xlabel('f/Hz');
-%xlim([0 1000])
-title('Frequency Sprectrum (Windowed):');
+xlim([0 max(f_real)])
+title('Frequency Spectrum (Windowed):');
 legend(sprintf('Decimator out: f = %.2f Hz',freq_peak), ...
     sprintf('Input Signal (reference, downsampeled): f = %.2f Hz',freq_peak_ref))
 

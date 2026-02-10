@@ -114,7 +114,7 @@ hold off;
 grid();
 ylabel('dB'); xlabel('f/fs');
 xlim([0 0.1])
-title(sprintf('Frequency Sprectrum (Windowed): SNR = %.2f dB', SNR_sim));
+title(sprintf('Frequency Spectrum (Windowed): SNR = %.2f dB', SNR_sim));
 legend('ΣΔ Modulator (Simulink, no decimation)', 'ΣΔ Modulator (delsig-toolbox)', 'Input Signal (reference)')
 
 
