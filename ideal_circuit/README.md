@@ -1,6 +1,6 @@
 # Second-Order Switched-Capacitor Modulator
 
-The ideal circuit is based on a first-order modulator by First Secondname.
+The ideal circuit is based on a first-order modulator by Joshua Nekl.
 
 The circuit was extended to a second-order modulator by adding a second switched-capacitor integrator stage.
 
