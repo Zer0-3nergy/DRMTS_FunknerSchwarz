@@ -126,6 +126,7 @@ legend('u downsampled', 'vsim (HDL)');
 axis([0 len_out -1.2 1.2])
 grid(); xlabel('Sample index'); ylabel('Amplitude');
 title('Plot: Reference vs. HDL Sim.')
+
 %% time domain plot with all
 u_down = downsample(u, M);
 fig3 = figure(3);

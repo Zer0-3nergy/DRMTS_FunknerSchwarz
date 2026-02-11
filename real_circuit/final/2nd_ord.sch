@@ -54,33 +54,33 @@ m=1
 value=0.2p
 footprint=1206
 device="ceramic capacitor"}
-C {/foss/designs/final/INV.sym} -500 380 0 0 {name=x9}
+C {./INV.sym} -500 380 0 0 {name=x9}
 C {lab_pin.sym} -500 220 1 0 {name=p29 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -500 300 0 0 {name=l1 lab=GND}
-C {/foss/designs/final/TG.sym} -400 260 1 0 {name=x1}
+C {./TG.sym} -400 260 1 0 {name=x1}
 C {gnd.sym} -440 240 1 0 {name=l2 lab=GND}
 C {lab_pin.sym} -360 260 2 0 {name=p1 sig_type=std_logic lab=phi2
 }
 C {lab_pin.sym} -540 260 0 0 {name=p2 sig_type=std_logic lab=phi2
 }
-C {/foss/designs/final/INV.sym} -500 140 0 0 {name=x2}
+C {./INV.sym} -500 140 0 0 {name=x2}
 C {lab_pin.sym} -500 -20 1 0 {name=p3 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -500 60 0 0 {name=l3 lab=GND}
-C {/foss/designs/final/TG.sym} -400 20 1 0 {name=x3}
+C {./TG.sym} -400 20 1 0 {name=x3}
 C {gnd.sym} -440 0 1 0 {name=l4 lab=GND}
-C {/foss/designs/final/INV.sym} -200 140 0 0 {name=x4}
+C {./INV.sym} -200 140 0 0 {name=x4}
 C {lab_pin.sym} -200 -20 1 0 {name=p6 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -200 60 0 0 {name=l5 lab=GND}
-C {/foss/designs/final/TG.sym} -100 20 1 0 {name=x5}
+C {./TG.sym} -100 20 1 0 {name=x5}
 C {gnd.sym} -140 0 1 0 {name=l7 lab=GND}
 C {lab_pin.sym} -60 20 2 0 {name=p7 sig_type=std_logic lab=phi2
 }
 C {lab_pin.sym} -240 20 0 0 {name=p8 sig_type=std_logic lab=phi2
 }
-C {/foss/designs/final/INV.sym} -200 380 0 0 {name=x6}
+C {./INV.sym} -200 380 0 0 {name=x6}
 C {lab_pin.sym} -200 220 1 0 {name=p17 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -200 300 0 0 {name=l8 lab=GND}
-C {/foss/designs/final/TG.sym} -100 260 1 0 {name=x7}
+C {./TG.sym} -100 260 1 0 {name=x7}
 C {gnd.sym} -140 240 1 0 {name=l9 lab=GND}
 C {lab_pin.sym} -100 340 3 0 {name=p22 sig_type=std_logic lab=Vcm}
 C {lab_pin.sym} -1280 -170 0 0 {name=p4 sig_type=std_logic lab=Vin}
@@ -97,7 +97,7 @@ m=1
 value=1p
 footprint=1206
 device="ceramic capacitor"}
-C {/foss/designs/final/5T_OTA.sym} 140 -80 0 0 {name=x8}
+C {./5T_OTA.sym} 140 -80 0 0 {name=x8}
 C {lab_pin.sym} 140 -120 1 0 {name=p9 sig_type=std_logic lab=Vdd}
 C {gnd.sym} 140 -40 0 0 {name=l6 lab=GND}
 C {gnd.sym} 70 400 0 0 {name=l11 lab=GND}
@@ -132,40 +132,40 @@ C {lab_pin.sym} 90 -100 0 0 {name=p15 sig_type=std_logic lab=Vcm}
 C {lab_pin.sym} 380 -100 0 0 {name=p16 sig_type=std_logic lab=Vcm}
 C {lab_pin.sym} 380 -120 0 0 {name=p18 sig_type=std_logic lab=phi1}
 C {lab_pin.sym} 380 -140 0 0 {name=p19 sig_type=std_logic lab=Vdd}
-C {/foss/designs/ideal/ideal_comp.sym} 530 -110 0 0 {name=x10}
-C {/foss/designs/final/INV.sym} 760 -20 0 0 {name=x11}
+C {./ideal_comp.sym} 530 -110 0 0 {name=x10}
+C {./INV.sym} 760 -20 0 0 {name=x11}
 C {lab_pin.sym} 760 -180 1 0 {name=p27 sig_type=std_logic lab=Vdd}
 C {gnd.sym} 760 -100 0 0 {name=l16 lab=GND}
-C {/foss/designs/final/INV.sym} 660 180 0 1 {name=x12}
+C {./INV.sym} 660 180 0 1 {name=x12}
 C {lab_pin.sym} 660 20 3 1 {name=p28 sig_type=std_logic lab=Vdd}
 C {gnd.sym} 660 100 0 1 {name=l18 lab=GND}
-C {/foss/designs/final/INV.sym} -1340 380 0 0 {name=x13}
+C {./INV.sym} -1340 380 0 0 {name=x13}
 C {lab_pin.sym} -1340 220 1 0 {name=p30 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -1340 300 0 0 {name=l19 lab=GND}
-C {/foss/designs/final/TG.sym} -1240 260 1 0 {name=x14}
+C {./TG.sym} -1240 260 1 0 {name=x14}
 C {gnd.sym} -1280 240 1 0 {name=l20 lab=GND}
 C {lab_pin.sym} -1200 260 2 0 {name=p31 sig_type=std_logic lab=phi2
 }
 C {lab_pin.sym} -1380 260 0 0 {name=p32 sig_type=std_logic lab=phi2
 }
-C {/foss/designs/final/INV.sym} -1340 140 0 0 {name=x15}
+C {./INV.sym} -1340 140 0 0 {name=x15}
 C {lab_pin.sym} -1340 -20 1 0 {name=p33 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -1340 60 0 0 {name=l21 lab=GND}
-C {/foss/designs/final/TG.sym} -1240 20 1 0 {name=x16}
+C {./TG.sym} -1240 20 1 0 {name=x16}
 C {gnd.sym} -1280 0 1 0 {name=l22 lab=GND}
-C {/foss/designs/final/INV.sym} -1040 140 0 0 {name=x17}
+C {./INV.sym} -1040 140 0 0 {name=x17}
 C {lab_pin.sym} -1040 -20 1 0 {name=p34 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -1040 60 0 0 {name=l23 lab=GND}
-C {/foss/designs/final/TG.sym} -940 20 1 0 {name=x18}
+C {./TG.sym} -940 20 1 0 {name=x18}
 C {gnd.sym} -980 0 1 0 {name=l24 lab=GND}
 C {lab_pin.sym} -900 20 2 0 {name=p35 sig_type=std_logic lab=phi2
 }
 C {lab_pin.sym} -1080 20 0 0 {name=p36 sig_type=std_logic lab=phi2
 }
-C {/foss/designs/final/INV.sym} -1040 380 0 0 {name=x19}
+C {./INV.sym} -1040 380 0 0 {name=x19}
 C {lab_pin.sym} -1040 220 1 0 {name=p37 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -1040 300 0 0 {name=l25 lab=GND}
-C {/foss/designs/final/TG.sym} -940 260 1 0 {name=x20}
+C {./TG.sym} -940 260 1 0 {name=x20}
 C {gnd.sym} -980 240 1 0 {name=l26 lab=GND}
 C {capa.sym} -1130 140 3 0 {name=Cin1
 m=1
@@ -185,7 +185,7 @@ m=1
 value=1p
 footprint=1206
 device="ceramic capacitor"}
-C {/foss/designs/final/5T_OTA.sym} -700 -80 0 0 {name=x21}
+C {./5T_OTA.sym} -700 -80 0 0 {name=x21}
 C {lab_pin.sym} -700 -120 1 0 {name=p46 sig_type=std_logic lab=Vdd}
 C {gnd.sym} -700 -40 0 0 {name=l27 lab=GND}
 C {lab_pin.sym} -750 -100 0 0 {name=p47 sig_type=std_logic lab=Vcm}
